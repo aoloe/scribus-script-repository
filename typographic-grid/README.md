@@ -15,7 +15,8 @@ Existing grid calculators
 - http://typedesk.com/2010/12/06/making-grids-with-sigurdur-armannsson-easy-grid-calculator/
   http://font.is/EasyGrid/EasyGridCalculator.htm
   http://font.is/grid-systems-calculate-grids-for-layouts-in-indesign-with-the-help-of-the-easy-grid-calculator/
+  http://gridulator.com/
 
 Rules and explanations
 - http://www.guylabbe.ca/blog/design-grilles-mise-en-page.html
-
+  http://css.4design.tl/grille-typographique-nombre-d-or/ Calculate a layout grid with the golden ratio (french)
