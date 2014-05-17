@@ -32,13 +32,14 @@ unit_current=scribus.getUnit() #get unit and change it to mm
 scribus.setUnit(scribus.UNIT_MILLIMETERS)
 
 page = scribus.getPageSize()
-margin = scribus.getPageMargins()
+(margin_top, margin_left, margin_right, margin_bottom) = scribus.getPageNMargins(scribus.currentPage())
 
 # scribus.setHGuides([10,20,30])
 
 setGuidesColumn(6, 5)
 # setGuidesRow(4, 5)
 
+scribus.setBaseLine(20, margin_top)
 
 
 scribus.setUnit(unit_current)
