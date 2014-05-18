@@ -22,33 +22,49 @@ import inout
 
 print "Produce content of graphic chart"
 
-# Display content to active destination output
-def display(content):
-    #destination = inout.scribus()
-#    destination = inout.console_display
-#    destination.display(content)
-    destination_display = inout.console_display
-    destination_display(content)
-
-def display_graphic_chart(graphic_chart):
-    display_colors(graphic_chart.colors)
-    display_fonts(graphic_chart.fonts)
-    return
-
-def display_colors(colors):
-    for color in colors:
-        texte = "Color '%s': kind=%s, ref=%s" \
-                % (color.label, color.kind, color.ref)
-        display(texte)
-    return
+class chart_production:
+    def __init__(self, target_display = 'console'):
+        self.set_display(target_display)
+        return
 
 
-def display_fonts(fonts):
-    for font in fonts:
-        texte = "Font '%s', Style '%s'" \
-                % (font.name, font.style)
-        display(texte)
-    return
+    def set_display(self, target):
+        if (target == 'scribus'):
+            self.output = inout.scribus_display()
+        else:
+            self.output = inout.console_display()
+        return
 
 
-display_graphic_chart(inout.test_chart)
+    def display_colors(self, colors):
+        self.output.display_text(inout.text("Colors used in chart",
+                                            self.output.current_position
+                                        )
+                                 )
+        for color in colors:
+            self.output.display_figure('rect')
+            text = "Color '%s': kind=%s, ref=%s" \
+                   % (color.label, color.kind, color.ref)
+            self.output.display_text(text)
+        return
+        
+
+    def display_fonts(self, fonts):
+        self.output.display_text("Fonts used in chart")
+        for font in fonts:
+            texte = "Font '%s', Style '%s'" \
+                    % (font.name, font.style)
+            self.output.display_text(texte)
+        return
+
+
+    def display_graphic_chart(self, graphic_chart):
+        self.display_colors(graphic_chart.colors)
+        self.display_fonts(graphic_chart.fonts)
+        return
+
+
+# Main executed if called out of script
+if __name__ == "__main__":
+    production = chart_production('scribus')
+    production.display_graphic_chart(inout.test_chart)

@@ -43,7 +43,7 @@ def extract_fonts():
     return [font_def(name, style) for name, style in fonts]
     
 
-def extract():
+def extract(chart):
     """
     Extract the graphic chart of the current document.
     """
@@ -61,16 +61,16 @@ def extract():
 
     colors = extract_colors()
     fonts = extract_fonts()
-    chart = graphic_chart_def()
     for color in colors:
         chart.add_color(color)
     for font in fonts:
-        chart.add_chart(font)
+        chart.add_font(font)
     return chart
 
 
 def main():
-    extract()
+    chart = graphic_chart_def()
+    extract(chart)
 
 if __name__ == "__main__":
     main()
