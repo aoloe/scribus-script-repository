@@ -1,7 +1,51 @@
 # scribus-script-typographicgrid
 
+Create the typographic grid and the baseline grid based on some parameters for the current page.
 
-Scribus script to create a typographic grid
+http://github.com/aoloe/scribus-script-repository/typographic-grid/
+
+Asks for
+
+- the number of columns
+- the size of the main text (in pt; in order to calculate the line height)
+- the orientation of the cells
+
+and calculate the cell size and line height that match the grid and still are as close as possible to the values provided.
+
+The script first uses the user's value to calculate
+- the number of lines fitting the page
+- the width of the columns
+- the number of rows fitting in the page that are proportional to the columns
+
+Then the number of lines is adjusted to be a multiple of the number rows that some how matches the number of lines in the row.
+
+Finally: 
+- the line height is adjusted by dividing the page height by the new number of lines,
+- the gap is defined,
+- the typographic grid created and
+- the baseline grid defined
+
+
+LICENSE:
+
+This program is free software under the MIT license.
+
+Author: Ale Rimoldi <ale@graphicslab.org>
+
+Please report bugs to http://github.com/aoloe/scribus-script-repository/
+
+TODO:
+- port to the new scripter and create a real dialog with pyqt
+- give the option to avoid reducing the line height
+- let the user define a ration between gap and line height (works only for half, double, ... (powers of two))
+- let the user define other cells proportions than 2:3
+
+PENDING SCRIBUS BUG REPORTs
+- add the setGuidesColumn and setGuidesRow API calls
+- fix the doc for the return value of messageBox (cf. comment in this script)
+
+
+ABOUT THE TYPOGRAPHIC GRID
 
 - http://en.wikipedia.org/wiki/Grid_%28page_layout%29
 - http://www.vanseodesign.com/web-design/grid-anatomy/
@@ -11,7 +55,7 @@ Scribus script to create a typographic grid
 - http://www.bachgarde.com/gridsystem.html
 - http://font.is/grid-systems-making-grids-in-illustrator-2/
 
-Existing grid calculators
+Other grid calculators
 - http://typedesk.com/2010/12/06/making-grids-with-sigurdur-armannsson-easy-grid-calculator/
   http://font.is/EasyGrid/EasyGridCalculator.htm
   http://font.is/grid-systems-calculate-grids-for-layouts-in-indesign-with-the-help-of-the-easy-grid-calculator/
@@ -43,11 +87,6 @@ Et si la seule constante indépassable n’était finalement rien d’autre que 
 une valeur de 21 pixels pour l’interlignage s’est imposée. Ce chiffre correspond à la fois au produit du nombre d’Or typographique par un corps de texte de 14 pixels (1,5 x 14 = 21) et au produit du nombre d’Or tout court par un corps de texte composé en 13 pixels (1,618 x 13 = 21,034), ce qui permet de faire face à la plupart des situations. Un corps de texte en dessous des 13 pixels n’est de toute manière pas très raisonnable !
 
 Il suffit d’utiliser cette valeur pour la gouttière et d’en faire aussi la largeur des colonnes pour obtenir une grille composée uniquement de modules de 21 pixels de large. C’est donc la largeur totale qui devient la variable d’ajustement à la place de la gouttière, permettant à cette dernière d’être en harmonie avec l’interlignage et un regroupement plusieurs colonnes comme 42px + 21px ou 63px + 21px et ainsi de suite.
-
-## Warning
-
-Attention, une différence de quelques millimètre, sur un text relativement long, forme un décalage ( exemple : http://nascentguruism.com/?show=baselines ).
-
 
 ## infos suplémentaire
 
