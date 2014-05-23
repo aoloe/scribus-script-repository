@@ -35,6 +35,13 @@ Author: Ale Rimoldi <ale@graphicslab.org>
 Please report bugs to http://github.com/aoloe/scribus-script-repository/
 
 TODO:
+
+before 1.0:
+- try to find the closest page line count match by tweaking the number of rows
+- implement the API calls for guides columns and rows
+- fix the guides columns and rows dialog to show the number of columns and rows instead of the number of guides (starting from 1; leave the sla as is) and use the margin as a default.
+
+further tweaks:
 - port to the new scripter and create a real dialog with pyqt
 - give the option to avoid reducing the line height
 - let the user define a ration between gap and line height (works only for half, double, ... (powers of two))

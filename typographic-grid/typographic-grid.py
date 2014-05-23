@@ -16,8 +16,8 @@ import sys
 try:
    import scribus
 except ImportError:
-    print "This script only works from within Scribus"
-    sys.exit(1)
+    # print "This script only works from within Scribus"
+    # sys.exit(1)
     # mock of the scribus API for running the script with defaults values from the terminal
     # (for testing and developping)
     # uncomment the two lines above if you think this is what you want...
@@ -116,7 +116,7 @@ def get_int_from_dialog_value(value) :
     return value
 
 def debug(label, value = '') :
-    if False :
+    if True :
         print label+' '+str(value)
 
 debug("############")
@@ -191,21 +191,21 @@ debug("row_count", row_count)
 
 row_lines_count = page_line_count - (row_count - 1) # in the rows we put all the lines but the gaps
 
+debug("range", range(-(row_count / 4), (row_count / 4) + 1))
+
 lines_per_row_overflow = row_lines_count % row_count
 
 debug("lines_per_row_overflow", lines_per_row_overflow)
 
 if lines_per_row_overflow > 0 :
     if lines_per_row_overflow < (row_count / 2) :
-        while row_lines_count % row_count > 0 :
-            row_lines_count = row_lines_count - 1
+        row_lines_count = row_lines_count - lines_per_row_overflow
     else :
-        while row_lines_count % row_count > 0 :
-            row_lines_count = row_lines_count + 1
-
-debug("row_lines_count", row_lines_count)
+        row_lines_count = row_lines_count + (row_count - lines_per_row_overflow)
 
 page_line_count = row_lines_count  + (row_count - 1) # in the rows we put all the lines but the gaps
+
+debug ("page_line_count", page_line_count)
 
 lines_per_row = page_line_count / row_count
 
