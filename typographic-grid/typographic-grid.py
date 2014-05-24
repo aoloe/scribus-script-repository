@@ -16,8 +16,8 @@ import sys
 try:
    import scribus
 except ImportError:
-    # print "This script only works from within Scribus"
-    # sys.exit(1)
+    print "This script only works from within Scribus"
+    sys.exit(1)
     # mock of the scribus API for running the script with defaults values from the terminal
     # (for testing and developping)
     # uncomment the two lines above if you think this is what you want...
@@ -106,6 +106,16 @@ def get_row_count(page_inner_height, row_height, gap) :
         row_count = row_count - 1
     return row_count
 
+def get_divisable_page_line_count(line_count, row_count) :
+    lines_per_row_overflow = line_count % row_count
+    if lines_per_row_overflow > 0 :
+        if lines_per_row_overflow < (row_count / 2) :
+            line_count = line_count - lines_per_row_overflow
+        else :
+            line_count = line_count + (row_count - lines_per_row_overflow)
+
+    return line_count
+
 def get_int_from_dialog_value(value) :
     if value == '' :
         value = 0 
@@ -116,7 +126,7 @@ def get_int_from_dialog_value(value) :
     return value
 
 def debug(label, value = '') :
-    if True :
+    if False :
         print label+' '+str(value)
 
 debug("############")
@@ -133,7 +143,7 @@ scribus.setUnit(scribus.UNIT_MILLIMETERS)
 
 # some ratios for calculations
 
-pt_to_mm_ratio = 10.0/37
+pt_to_mm_ratio = 3.528 / 10.0
 cell_ratio = 2.0/3 # or 3/2
     
 
@@ -187,21 +197,32 @@ row_count = get_row_count(page_inner_height, row_height, gap)
 
 debug("row_count", row_count)
 
-# adjust the number of the lines to be "divisable" by the number of rows
+# adjust the number of the lines to be "divisable" by the number of rows (the number of rows can be adjusted by 1/4)
 
 row_lines_count = page_line_count - (row_count - 1) # in the rows we put all the lines but the gaps
 
-debug("range", range(-(row_count / 4), (row_count / 4) + 1))
+debug("row_lines_count", row_lines_count);
 
-lines_per_row_overflow = row_lines_count % row_count
+page_line_count_options = dict()
 
-debug("lines_per_row_overflow", lines_per_row_overflow)
+min_i = 0;
+min_count = 0;
+min_diff = page_line_count;
 
-if lines_per_row_overflow > 0 :
-    if lines_per_row_overflow < (row_count / 2) :
-        row_lines_count = row_lines_count - lines_per_row_overflow
-    else :
-        row_lines_count = row_lines_count + (row_count - lines_per_row_overflow)
+for i in range(-(row_count / 4), (row_count / 4) + 1) :
+    count = get_divisable_page_line_count(row_lines_count, row_count + i)
+    debug('count', count)
+    if abs(row_lines_count - count) < min_diff :
+        min_diff = abs(row_lines_count - count)
+        min_count = count
+        min_i = i
+
+debug("min_i", min_i);
+debug("min_count", min_count);
+debug("page_line_count_options", page_line_count_options)
+
+row_count = row_count + min_i
+row_lines_count = min_count
 
 page_line_count = row_lines_count  + (row_count - 1) # in the rows we put all the lines but the gaps
 

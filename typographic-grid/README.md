@@ -17,7 +17,10 @@ The script first uses the user's value to calculate
 - the width of the columns
 - the number of rows fitting in the page that are proportional to the columns
 
-Then the number of lines is adjusted to be a multiple of the number rows that some how matches the number of lines in the row.
+Then
+- for ±25% number of rows
+- looks for the number of rows that allows a number of lines per page
+- with an height that best matches the value based on the font size.
 
 Finally: 
 - the line height is adjusted by dividing the page height by the new number of lines,
@@ -37,7 +40,6 @@ Please report bugs to http://github.com/aoloe/scribus-script-repository/
 TODO:
 
 before 1.0:
-- try to find the closest page line count match by tweaking the number of rows
 - implement the API calls for guides columns and rows
 - fix the guides columns and rows dialog to show the number of columns and rows instead of the number of guides (starting from 1; leave the sla as is) and use the margin as a default.
 
