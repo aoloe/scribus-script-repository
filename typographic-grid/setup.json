@@ -1,0 +1,28 @@
+{
+    "name" : {
+        "en" : "Typographic grid"
+    }
+    "web" : "https://github.com/aoloe/scribus-script-repository/",
+    "repository" : "https://github.com/aoloe/scribus-script-repository/",
+    "tickets" : "https://github.com/aoloe/scribus-script-repository/issues/",
+    "license" : "MIT",
+    "authors" : [
+        {
+            "name" : "Ale Rimoldi",
+            "email" : "ale@graphicslab.org"
+        }
+    ]
+    "script_version" : "1.0",
+    "min_scripter_version" : "1.0",
+    "max_scripter_version" : "1.0",
+    "min_scribus_version" : "1.4.0",
+    "max_scribus_version" : "",
+    "description" : {
+        "en" : "Create the typographic grid and the baseline grid based on some parameters for the current page.",
+    }
+    "readme" : "https://github.com/aoloe/scribus-script-repository/README.md",
+    "status" : "stable",
+    "files" : [
+        "README.md"
+    ]
+}
