@@ -8,7 +8,7 @@ Originally available from http://wiki.scribus.net/canvas/Scrambling_Text
 
 v3 is the most up to date 
 
-# Todo
+## Todo
 
 - show an alert explaining that the script makes the document unreadable.
 - only run the script if the current document has been saved.
