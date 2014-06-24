@@ -8,6 +8,10 @@ Originally available from http://wiki.scribus.net/canvas/Scrambling_Text
 
 v3 is the most up to date 
 
+## Licence
+
+© GPL 2 or later by Gregory Pittman, 2014
+
 ## Todo
 
 - [ ] probably merge the three version and keep the best one
