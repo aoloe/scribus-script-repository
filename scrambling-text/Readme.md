@@ -20,3 +20,4 @@ v3 is the most up to date
 - [ ] only run the script if the current document has been saved.
 - [ ] the default action is to "Save as" after the dialog. But give an option not to do so.
 - [ ] eventually, also scramble the images by pulling images from a free resources.
+- [ ] we should probably keep the default length of words (or keep each word the same length as in the original?)
