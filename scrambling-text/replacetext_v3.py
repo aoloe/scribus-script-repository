@@ -1,6 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# File: replacetext_v3.py
 # © 2014.06.06 Gregory Pittman
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,9 +11,8 @@ You must have a document open.
 WARNING: this script irreversibly scrambles your text on all pages.
 You would be wise to work on a copy of the original to avoid 
 accidentally saving this scrambled version only to lose the original.
- 
- 
 """
+
 import scribus
 import random
  
