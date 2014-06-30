@@ -15,6 +15,11 @@ Please report bugs to http://github.com/aoloe/scribus-script-repository/
 
 ## Todo
 
+it's probably better not to replace the image with a flickr one, but to strongly blur the existing image (by making a copy of the file first?).
+
+here some traces on how to implement blur in python: <http://stackoverflow.com/questions/19642395/blurring-an-image-in-python-without-pil>
+
+
 - [ ] crop a part of the image that matches the size of the image in the document and then scale it, so that it haves the same size of the original image (imagemagick? pil?.
 - [ ] show an alert explaining that the script replaces the current images.
 - [ ] only run the script if the current document has been saved.
