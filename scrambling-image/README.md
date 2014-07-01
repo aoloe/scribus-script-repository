@@ -17,7 +17,7 @@ Please report bugs to http://github.com/aoloe/scribus-script-repository/
 
 - [ ] it's probably better not to replace the image with a flickr one, but to strongly blur the existing image (by making a copy of the file first?).
 
-here some traces on how to implement blur in python:
+  here some traces on how to implement blur in python:
   - <http://stackoverflow.com/questions/19642395/blurring-an-image-in-python-without-pil>
   - <http://python.questionfor.info/q_python_65002.html>
   - <https://mail.python.org/pipermail/python-list/2007-August/429158.html>
