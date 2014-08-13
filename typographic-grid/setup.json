@@ -23,6 +23,6 @@
     "readme" : "https://github.com/aoloe/scribus-script-repository/README.md",
     "status" : "stable",
     "files" : [
-        "README.md"
+        "typographic-grid.py"
     ]
 }
