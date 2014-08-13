@@ -100,6 +100,7 @@ Remarks:
 # Dialogs
 
 - An uninstalled script is selected
+
       [ "Repository url"   ] [ Github |v] [ Add ]
 
       [ The GitHub script collection          |v]
