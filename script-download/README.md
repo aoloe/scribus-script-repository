@@ -1,15 +1,15 @@
-this script will be created during
+This script will be created during
 
 http://www.coactivate.org/projects/zurich-sprint/project-home
 
 # plans
 
 
-since the new scripter currently does not run, i'll be creating python / pyqt program that will be listing and downloading scripts from the same github repository mentioned above.
+Since the new scripter currently does not run, i'll be creating python / pyqt program that will be listing and downloading scripts from the same github repository mentioned above.
 
-it should be easy to get that script to run inside of scribus, once scribus itself will be ready.
+It should be easy to get that script to run inside of scribus, once scribus itself will be ready.
 
-the plan is to:
+The plan is to:
 
 - define a metadata file for each script (directory) and (possibly) one for the full repository
 - define and create dialogs for managing the (list of ) repository(ies) and the local storage.
@@ -32,9 +32,14 @@ Remarks:
 
 # Downloading the files
 
-- When downloading a script, only the files listed in the manifest are downloaded
+- When downloading a script, only the files listed in the manifest are downloaded.
+- The list of files in the repository is queried through an HTTP request to the Github API.
+- The single files are downloaded by HTTP through Github's RAW interface.
 
 # Running the script
+
+- The script should get into the official Scribus source code and appear in the Scripts menu entry.
+- By default no repositories should be pre-configured (adding an official Scribus repository does not make much sense for now, since Scripts that could be in there, would be in the Scribus scripts directory anyway).
 
 # Metadata
 
@@ -109,7 +114,7 @@ Remarks:
 
         +---------------------------------------+-+
         |> Typographic grid                     |^|
-        |  Document scrambling                i | |
+        |  Document scrambling                ✓ | |
         |                                       | |
         |                                       | |
         |                                       |v|
@@ -152,8 +157,8 @@ Remarks:
         Search: [                                 ]
 
         +---------------------------------------+-+
-        |> Typographic grid                     |^|
-        |  Document scrambling                i | |
+        |> Typographic grid                    <|^|
+        |  Document scrambling                ✓ | |
         |                                       | |
         |                                       | |
         |                                       |v|
