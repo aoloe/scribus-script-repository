@@ -32,7 +32,9 @@ Remarks:
 
 # Downloading the files
 
-- Only the files listted in the manifest are downloaded
+- When downloading a script, only the files listed in the manifest are downloaded
+
+# Running the script
 
 # Metadata
 
@@ -97,43 +99,67 @@ Remarks:
 
 # Dialogs
 
-    [ Repository url       ] [ Type |v] [ Add ]
+- An uninstalled script is selected
 
-    [ The GitHub script collection          |v]
+      [ "Repository url"   ] [ Github |v] [ Add ]
 
-    Search: [                                 ]
+      [ The GitHub script collection          |v]
 
-    +---------------------------------------+-+
-    |> Typographic grid                     |^|
-    |  Document scrambling                i | |
-    |                                       | |
-    |                                       | |
-    |                                       |v|
-    +---------------------------------------+-+
-    +-----------------------------------------+
-    | Create the typographic grid and the     |
-    | baseline grid based on some parameters  |
-    | for the current page.                   |
-    +-----------------------------------------+
-    [ More ] [ Add ]
+      Search: [                                 ]
 
+      +---------------------------------------+-+
+      |> Typographic grid                     |^|
+      |  Document scrambling                i | |
+      |                                       | |
+      |                                       | |
+      |                                       |v|
+      +---------------------------------------+-+
+      +-----------------------------------------+
+      | Create the typographic grid and the     |
+      | baseline grid based on some parameters  |
+      | for the current page.                   |
+      +-----------------------------------------+
+      [ More ] [ Add ]
 
-    [ Repository url       ] [ Type |v] [ Add ]
+- An installed script is selected
 
-    [ The GitHub script collection          |v]
+      [ "Repository url"   ] [ Github |v] [ Add ]
 
-    Search: [                                 ]
+      [ The GitHub script collection          |v]
 
-    +---------------------------------------+-+
-    |  Typographic grid                     |^|
-    |> Document scrambling               ✓ <| |
-    |                                       | |
-    |                                       | |
-    |                                       |v|
-    +---------------------------------------+-+
-    +-----------------------------------------+
-    | Create the typographic grid and the     |
-    | baseline grid based on some parameters  |
-    | for the current page.                   |
-    +-----------------------------------------+
-    [ Run ] [ More ] [ Delete ]
+      Search: [                                 ]
+
+      +---------------------------------------+-+
+      |  Typographic grid                     |^|
+      |> Document scrambling               ✓ <| |
+      |                                       | |
+      |                                       | |
+      |                                       |v|
+      +---------------------------------------+-+
+      +-----------------------------------------+
+      | Create the typographic grid and the     |
+      | baseline grid based on some parameters  |
+      | for the current page.                   |
+      +-----------------------------------------+
+      [ Run ] [ More ] [ Delete ]
+
+- Alternative view with radio buttons instead of drop downs for the list of active repositories
+      [ "Repository url"   ] [ Github |v] [ Add ]
+      (o) The GitHub script collection
+      ( ) Another repository
+
+      Search: [                                 ]
+
+      +---------------------------------------+-+
+      |> Typographic grid                     |^|
+      |  Document scrambling                i | |
+      |                                       | |
+      |                                       | |
+      |                                       |v|
+      +---------------------------------------+-+
+      +-----------------------------------------+
+      | Create the typographic grid and the     |
+      | baseline grid based on some parameters  |
+      | for the current page.                   |
+      +-----------------------------------------+
+      [ More ] [ Add ]
