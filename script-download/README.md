@@ -101,25 +101,25 @@ Remarks:
 
 - An uninstalled script is selected
 
-      [ "Repository url"   ] [ Github |v] [ Add ]
+        [ "Repository url"   ] [ Github |v] [ Add ]
 
-      [ The GitHub script collection          |v]
+        [ The GitHub script collection          |v]
 
-      Search: [                                 ]
+        Search: [                                 ]
 
-      +---------------------------------------+-+
-      |> Typographic grid                     |^|
-      |  Document scrambling                i | |
-      |                                       | |
-      |                                       | |
-      |                                       |v|
-      +---------------------------------------+-+
-      +-----------------------------------------+
-      | Create the typographic grid and the     |
-      | baseline grid based on some parameters  |
-      | for the current page.                   |
-      +-----------------------------------------+
-      [ More ] [ Add ]
+        +---------------------------------------+-+
+        |> Typographic grid                     |^|
+        |  Document scrambling                i | |
+        |                                       | |
+        |                                       | |
+        |                                       |v|
+        +---------------------------------------+-+
+        +-----------------------------------------+
+        | Create the typographic grid and the     |
+        | baseline grid based on some parameters  |
+        | for the current page.                   |
+        +-----------------------------------------+
+        [ More ] [ Add ]
 
 - An installed script is selected
 
