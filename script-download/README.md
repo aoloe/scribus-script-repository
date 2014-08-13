@@ -17,13 +17,6 @@ the plan is to:
 - and to detect which scripts should be updated.
 
 
-# The downloader settings
-
-- list of repositories:
-  - url
-  - type (github, ...)
-- where you want the scripts to be placed
- 
 # The repository's structure
 
 - manifest.json
@@ -34,7 +27,12 @@ the plan is to:
   - other-files/
 
 Remarks:
-- the names are case sensitive
+- The names are case sensitive
+- Only the main script file should be directly placed in the script's directory. All other files that are to be downloaded, should be in one sub-directory.
+
+# Downloading the files
+
+- Only the files listted in the manifest are downloaded
 
 # Metadata
 
@@ -87,6 +85,7 @@ Remarks:
         {
             "repository" : "https://github.com/aoloe/scribus-script-repository/",
             "name" : "The GitHub scripts collection",
+            "target_path" : "/usr/scribus/share/scribus/scripts/"
             "script" : [
                 {
                     "path" : "document-scrambling/document-scrambling.py",
