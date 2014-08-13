@@ -123,43 +123,44 @@ Remarks:
 
 - An installed script is selected
 
-      [ "Repository url"   ] [ Github |v] [ Add ]
+        [ "Repository url"   ] [ Github |v] [ Add ]
 
-      [ The GitHub script collection          |v]
+        [ The GitHub script collection          |v]
 
-      Search: [                                 ]
+        Search: [                                 ]
 
-      +---------------------------------------+-+
-      |  Typographic grid                     |^|
-      |> Document scrambling               ✓ <| |
-      |                                       | |
-      |                                       | |
-      |                                       |v|
-      +---------------------------------------+-+
-      +-----------------------------------------+
-      | Create the typographic grid and the     |
-      | baseline grid based on some parameters  |
-      | for the current page.                   |
-      +-----------------------------------------+
-      [ Run ] [ More ] [ Delete ]
+        +---------------------------------------+-+
+        |  Typographic grid                     |^|
+        |> Document scrambling               ✓ <| |
+        |                                       | |
+        |                                       | |
+        |                                       |v|
+        +---------------------------------------+-+
+        +-----------------------------------------+
+        | Create the typographic grid and the     |
+        | baseline grid based on some parameters  |
+        | for the current page.                   |
+        +-----------------------------------------+
+        [ Run ] [ More ] [ Delete ]
 
 - Alternative view with radio buttons instead of drop downs for the list of active repositories
-      [ "Repository url"   ] [ Github |v] [ Add ]
-      (o) The GitHub script collection
-      ( ) Another repository
 
-      Search: [                                 ]
+        [ "Repository url"   ] [ Github |v] [ Add ]
+        (o) The GitHub script collection
+        ( ) Another repository
 
-      +---------------------------------------+-+
-      |> Typographic grid                     |^|
-      |  Document scrambling                i | |
-      |                                       | |
-      |                                       | |
-      |                                       |v|
-      +---------------------------------------+-+
-      +-----------------------------------------+
-      | Create the typographic grid and the     |
-      | baseline grid based on some parameters  |
-      | for the current page.                   |
-      +-----------------------------------------+
-      [ More ] [ Add ]
+        Search: [                                 ]
+
+        +---------------------------------------+-+
+        |> Typographic grid                     |^|
+        |  Document scrambling                i | |
+        |                                       | |
+        |                                       | |
+        |                                       |v|
+        +---------------------------------------+-+
+        +-----------------------------------------+
+        | Create the typographic grid and the     |
+        | baseline grid based on some parameters  |
+        | for the current page.                   |
+        +-----------------------------------------+
+        [ More ] [ Add ]
