@@ -6,46 +6,90 @@ USAGE
 You must have a document open, and at least one text frame selected.
  
 """
+import sys
 
-import urllib2
+import urllib.request
+import urllib.error
 import json
+
+
+def printMessage(message) :
+    print(message)
+
+def showMessage() :
+    print("show")
+    return "test"
+
+
+from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QGuiApplication
+from PyQt5.QtQml import QQmlApplicationEngine
+
+app = QGuiApplication(sys.argv)
+engine = QQmlApplicationEngine("ui/main.qml")
+window = engine.rootObjects()[0]
+window.show()
+
+window.printMessage.connect(printMessage) # i think it should be after window.show(); and signal must be defined in the root element
+window.showMessage.connect(showMessage)
+
+engine.quit.connect(app.quit)
+sys.exit(app.exec_())
+
+# button = window.findChild(QObject, "printButton")
+# button.printMessage.connect(printMessage)
+# button.clicked.connect(printMessage) # better to directly connect he click?
+
+print(test)
+
+
+sys.exit()
+
 
 # TODO: manage url not found
  
-# gh_url = 'https://api.github.com'
-# gh_url = 'https://raw.github.com/$user/$repository/$branch/'
 # gh_url = 'https://raw.github.com/aoloe/scribus-script-repository/master/'
 gh_url = 'https://api.github.com/repos/aoloe/scribus-script-repository/git/trees/master?recursive=1'
-req = urllib2.Request(gh_url)
+req = urllib.request.Request(gh_url)
  
-# password_manager = urllib2.HTTPPasswordMgrWithDefaultRealm()
+# password_manager = urllib.HTTPPasswordMgrWithDefaultRealm()
 # password_manager.add_password(None, gh_url, 'user', 'pass')
  
-# auth_manager = urllib2.HTTPBasicAuthHandler(password_manager)
-# opener = urllib2.build_opener(auth_manager)
+# auth_manager = urllib.HTTPBasicAuthHandler(password_manager)
+# opener = urllib.build_opener(auth_manager)
  
-# urllib2.install_opener(opener)
+# urllib.install_opener(opener)
  
 try:
-    handler = urllib2.urlopen(req)
+    handler = urllib.request.urlopen(req) # returns http.client.HTTPResponse
+    # import pdb; pdb.set_trace()
     response_code = handler.getcode()
-except urllib2.URLError, e:
+except urllib.error.URLError as e:
     if not hasattr(e, "code"):
         raise
     response_code = e.code
  
 if response_code == 200 :
-    print handler.headers.getheader('content-type')
-    print handler.headers["X-RateLimit-Limit"]
-    response = handler.read()
-    # print response
+    print(handler.getheader('content-type'))
+    print(handler.getheader('X-RateLimit-Limit'))
+    response = handler.readall().decode('utf-8')
+    # print(response)
     file_list = json.loads(response)
-    # print file_list
+    # print(file_list)
     # {u'url': u'https://api.github.com/repos/aoloe/scribus-script-repository/git/trees/caf72ddee55ae345862879bcf2559cf32ccd4a93', u'path': u'CopyPaste', u'type': u'tree', u'mode': u'040000', u'sha': u'caf72ddee55ae345862879bcf2559cf32ccd4a93'}
-    # print file_list['tree']
+    # print(file_list['tree'])
     for file in file_list['tree'] :
-        print file['type']
-        print file['path']
-        # print file['url']
+        print(file['type'])
+        print(file['path'])
+        # print(file['url'])
 elif response_code :
-    print 'repository URL is not valid ' + gh_url
+    print('repository URL is not valid ' + gh_url)
+
+
+def on_qml_mouse_clicked():
+    print('mouse clicked')
+
+qml_rectangle = view.rootObject()
+qml_rectangle.clicked.connect(on_qml_mouse_clicked)
+
+sys.exit(app.exec_())

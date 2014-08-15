@@ -169,3 +169,10 @@ Remarks:
         | for the current page.                   |
         +-----------------------------------------+
         [ More ] [ Add ]
+
+# Notes
+- without introducing the github credentials, only 60 connections per hour and repository (or IP?)
+
+# Development resources
+
+- http://stackoverflow.com/questions/24111717/how-to-bind-buttons-in-qt-quick-to-python-pyqt-5
