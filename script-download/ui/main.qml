@@ -10,9 +10,13 @@ ApplicationWindow {
     title: qsTr("hey")
 
     property string msg
+    // property ListElement pythonListModel
 
     signal printMessage(string message)
     signal showMessage()
+
+    Keys.onEscapePressed: Qt.quit
+
 
     Action {
         id: applicationQuit 
@@ -52,8 +56,7 @@ ApplicationWindow {
                         // Keys.onEscapePressed: Qt.quit()
                     }
                 }
-            }
-
+            } 
             ExclusiveGroup {
                 id:group
             }
@@ -78,6 +81,28 @@ ApplicationWindow {
             TextField {
                 id: "text"
                 objectName: "text"
+            }
+
+            ComboBox {
+                currentIndex: 2
+                model: ListModel {
+                    id: cbItems
+                    ListElement { text: "Banana"; color: "Yellow" }
+                    ListElement { text: "Apple"; color: "Green" }
+                    ListElement { text: "Coconut"; color: "Brown" }
+                    ListElement { text: "Orange"; color: "Orange" }
+                }
+                width: 200
+                onCurrentIndexChanged: console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
+            }
+
+            TableView {
+                // anchors.centerIn: parent
+                // model: fruitModel
+                TableViewColumn {role: "text"; title: "Column 1" }
+                // headerVisible: false
+                model: pythonListModel
+                // model: 20
             }
         }
     }

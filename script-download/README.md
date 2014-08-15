@@ -176,3 +176,50 @@ Remarks:
 # Development resources
 
 - http://stackoverflow.com/questions/24111717/how-to-bind-buttons-in-qt-quick-to-python-pyqt-5
+- a good example for a qml dialog: https://github.com/ioriayane/KanmusuMemory/blob/master/qml/KanmusuMemory/TimerSetting.qml
+- lists:
+  - https://qt-project.org/wiki/Selectable-list-of-Python-objects-in-QML
+- further reading: [QML for desktop apps ](https://www.youtube.com/watch?v=kvWeE3kurEQ)
+- a (for me too complicated) example on how to use a python model for qml lists: https://qt-project.org/wiki/Selectable-list-of-Python-objects-in-QML
+
+
+# Snippets
+
+            Item {
+                width: 50; height: 20
+                ListModel {
+                    id: fruitModel
+
+                    ListElement {
+                        name: "Apple"
+                        cost: 2.45
+                    }
+                    ListElement {
+                        name: "Orange"
+                        cost: 3.25
+                    }
+                    ListElement {
+                        name: "Banana"
+                        cost: 1.95
+                    }
+                }
+
+                ScrollView {
+                     ListView {
+                        id: lista
+                        anchors.fill: parent
+                        model: fruitModel
+                        delegate: Row {
+                             Text { text: "Fruit: " + name }
+                             Text { text: "Cost: $" + cost }
+                        }
+                     }
+                }
+
+                ScrollBar {
+                     id: vertical
+                     flickableItem: lista
+                     orientation: Qt.Vertical
+                     anchors { right: lista.right; top: lista.top }
+                 }
+            }

@@ -12,7 +12,7 @@ import urllib.request
 import urllib.error
 import json
 
-class Test :
+class Controller :
     window = 0
     def setWindow(self, window) :
         self.window = window
@@ -28,15 +28,31 @@ from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtQml import QQmlApplicationEngine
 
 app = QGuiApplication(sys.argv)
-engine = QQmlApplicationEngine("ui/main.qml")
+# engine = QQmlApplicationEngine("ui/main.qml")
+engine = QQmlApplicationEngine()
+colors = [
+    { "color": "red", "text": "Zeile 1" },
+    { "color": "green", "text": "Zeile 2" },
+    { "color": "blue", "text": "Zeile 3" }
+]
+context = engine.rootContext()
+context.setContextProperty("pythonListModel", colors) # the model has to be defined before the qml file is loaded
+engine.load("ui/main.qml")
+# import pdb; pdb.set_trace()
+
 window = engine.rootObjects()[0]
 window.show()
 
-test = Test()
-test.setWindow(window)
+controller = Controller()
+controller.setWindow(window)
 
-window.printMessage.connect(test.printMessage) # i think it should be after window.show(); and signal must be defined in the root element
-window.showMessage.connect(test.showMessage)
+window.printMessage.connect(controller.printMessage) # i think it should be after window.show(); and signal must be defined in the root element
+window.showMessage.connect(controller.showMessage)
+
+
+# import pdb; pdb.set_trace()
+print("abc");
+window.setProperty("pythonListModel", colors)
 
 #msg = "efgh"
 # window.setContextProperty("msg", msg)
