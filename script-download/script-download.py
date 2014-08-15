@@ -12,14 +12,16 @@ import urllib.request
 import urllib.error
 import json
 
+class Test :
+    window = 0
+    def setWindow(self, window) :
+        self.window = window
+        
+    def printMessage(self, message) :
+        print(message)
 
-def printMessage(message) :
-    print(message)
-
-def showMessage() :
-    print("show")
-    return "test"
-
+    def showMessage(self) :
+        window.setProperty("msg", "show") # you cannot return a value from a signal, you have to set a qml property and, then read its value from the qml event
 
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QGuiApplication
@@ -30,8 +32,16 @@ engine = QQmlApplicationEngine("ui/main.qml")
 window = engine.rootObjects()[0]
 window.show()
 
-window.printMessage.connect(printMessage) # i think it should be after window.show(); and signal must be defined in the root element
-window.showMessage.connect(showMessage)
+test = Test()
+test.setWindow(window)
+
+window.printMessage.connect(test.printMessage) # i think it should be after window.show(); and signal must be defined in the root element
+window.showMessage.connect(test.showMessage)
+
+#msg = "efgh"
+# window.setContextProperty("msg", msg)
+#window.setProperty("msg", msg)
+# window.msg = msg
 
 engine.quit.connect(app.quit)
 sys.exit(app.exec_())

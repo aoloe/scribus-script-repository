@@ -9,6 +9,8 @@ ApplicationWindow {
     height: 300
     title: qsTr("hey")
 
+    property string msg
+
     signal printMessage(string message)
     signal showMessage()
 
@@ -37,8 +39,9 @@ ApplicationWindow {
                         // anchors.centerIn: parent
                         text: "Get it"
                         onClicked: { // multiple actions
-                            text.text = "abc"
-                            text.text = showMessage()
+                            showMessage()
+                            text.text = root.msg
+                            // text.text = "abc"
                         }
                     }
 
