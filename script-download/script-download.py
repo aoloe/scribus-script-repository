@@ -51,8 +51,6 @@ window.showMessage.connect(controller.showMessage)
 
 
 # import pdb; pdb.set_trace()
-print("abc");
-window.setProperty("pythonListModel", colors)
 
 #msg = "efgh"
 # window.setContextProperty("msg", msg)

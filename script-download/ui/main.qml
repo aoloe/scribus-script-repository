@@ -25,7 +25,7 @@ ApplicationWindow {
     }
 
     GroupBox {
-        anchors.centerIn: parent
+        // anchors.centerIn: parent
         ColumnLayout {
             GroupBox {
                 RowLayout {
@@ -100,6 +100,7 @@ ApplicationWindow {
                 // anchors.centerIn: parent
                 // model: fruitModel
                 TableViewColumn {role: "text"; title: "Column 1" }
+                // height: 50
                 // headerVisible: false
                 model: pythonListModel
                 // model: 20

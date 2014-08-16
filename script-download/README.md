@@ -181,7 +181,8 @@ Remarks:
   - https://qt-project.org/wiki/Selectable-list-of-Python-objects-in-QML
 - further reading: [QML for desktop apps ](https://www.youtube.com/watch?v=kvWeE3kurEQ)
 - a (for me too complicated) example on how to use a python model for qml lists: https://qt-project.org/wiki/Selectable-list-of-Python-objects-in-QML
-
+- tableview:
+  - how to make items editable: http://blog.qt.digia.com/blog/2011/05/26/table-view-with-qt-quick/
 
 # Snippets
 
