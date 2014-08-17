@@ -10,12 +10,13 @@ ApplicationWindow {
     title: qsTr("hey")
 
     property string msg
-    // property ListElement pythonListModel
+    onMsgChanged: {
+        console.debug("test")
+        text.text = msg // root.msg
+    }
 
     signal printMessage(string message)
     signal showMessage()
-
-    Keys.onEscapePressed: Qt.quit
 
 
     Action {
@@ -24,9 +25,73 @@ ApplicationWindow {
         onTriggered: Qt.quit
     }
 
-    GroupBox {
+    Rectangle {
+
+        // Keys.onEscapePressed: Qt.quit
+
         // anchors.centerIn: parent
         ColumnLayout {
+
+            GroupBox {
+                RowLayout {
+                    TextField {
+                        width:100
+                        id: "repositoryUrl"
+                        objectName: "repositoryUrl"
+                    }
+                    ComboBox {
+                        // currentIndex: 2
+                        objectName: "repositoryType"
+                        model: pythonRepositoryTypeModel
+                        // onCurrentIndexChanged: console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
+                    }
+                    Button {
+                        objectName: "repositoryAdd"
+                        text: "Add"
+                    }
+                }
+            }
+            ComboBox {
+                // currentIndex: 2
+                model: pythonRepositoryListModel
+                // width: 200
+                // onCurrentIndexChanged: console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
+            }
+            TableView {
+                TableViewColumn {
+                    role: "scriptName"
+                    title: "Column 1"
+                }
+                TableViewColumn {
+                    role: "installed"
+                    title: "Column 2"
+                }
+                headerVisible: false
+                model: pythonScriptListModel
+            }
+            Text {
+                text: "Script description"
+            }
+            GroupBox {
+                RowLayout {
+                    Button {
+                        objectName: "scriptAdd"
+                        text: "Add"
+                    }
+                }
+            }
+            GroupBox {
+                RowLayout {
+                    Button {
+                        objectName: "scriptAdd"
+                        text: "Run"
+                    }
+                    Button {
+                        objectName: "scriptAdd"
+                        text: "Remove"
+                    }
+                }
+            }
             GroupBox {
                 RowLayout {
                     id: buttonsLayout
@@ -44,7 +109,7 @@ ApplicationWindow {
                         text: "Get it"
                         onClicked: { // multiple actions
                             showMessage()
-                            text.text = root.msg
+                            // text.text = root.msg
                             // text.text = "abc"
                         }
                     }
@@ -81,29 +146,6 @@ ApplicationWindow {
             TextField {
                 id: "text"
                 objectName: "text"
-            }
-
-            ComboBox {
-                currentIndex: 2
-                model: ListModel {
-                    id: cbItems
-                    ListElement { text: "Banana"; color: "Yellow" }
-                    ListElement { text: "Apple"; color: "Green" }
-                    ListElement { text: "Coconut"; color: "Brown" }
-                    ListElement { text: "Orange"; color: "Orange" }
-                }
-                width: 200
-                onCurrentIndexChanged: console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
-            }
-
-            TableView {
-                // anchors.centerIn: parent
-                // model: fruitModel
-                TableViewColumn {role: "text"; title: "Column 1" }
-                // height: 50
-                // headerVisible: false
-                model: pythonListModel
-                // model: 20
             }
         }
     }
