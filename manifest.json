@@ -2,7 +2,7 @@
     "name" : {
         "en" : "The GitHub scripts collection"
     },
-    "scripts_ignore" : [
+    "script_ignore" : [
         "script-download"
     ]
 }
