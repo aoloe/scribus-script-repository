@@ -55,6 +55,16 @@ Remarks:
         ]
     }
 
+    {
+        "name" : {
+            "en" : "The GitHub scripts collection",
+        },
+        "scripts_ignore" : [
+            "typographic-grid",
+            "document-scrambling"
+        ]
+    }
+
 ## The script's manifest
 
     {
@@ -170,8 +180,24 @@ Remarks:
         +-----------------------------------------+
         [ More ] [ Add ]
 
+We also need a settigns dialog:
+- where to store the scripts
+- add the repositories?
+
 # Notes
 - without introducing the github credentials, only 60 connections per hour and repository (or IP?)
+
+# Todo
+
+- show a ✓ in the script list (for isntalled script)
+- how to store the script's settings (list of repositories, installed scripts, 
+- find out how to close the dialog (where to place a close push botton)
+- find out how to close the dialog by pressing ESC
+- only show one row of buttons, switched according to the (installed) status of the selected script (add / run + remove)
+- implement adding the repositories
+- extend the repository manifest to allow the translation of the script names (as shown in the list of scripts)
+- show the script description when a script is selected
+- define where to put the scripts and how to avoid conflicht among scripts with the same name but from different repositories (refuse to install is an option... or renaming at install?)
 
 # Development resources
 

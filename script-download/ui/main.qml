@@ -9,27 +9,7 @@ ApplicationWindow {
     height: 300
     title: qsTr("hey")
 
-    property string msg
-    onMsgChanged: {
-        console.debug("test")
-        text.text = msg // root.msg
-    }
-
-    signal printMessage(string message)
-    signal showMessage()
-
-
-    Action {
-        id: applicationQuit 
-        shortcut: "Ctrl+Q"
-        onTriggered: Qt.quit
-    }
-
     Rectangle {
-
-        // Keys.onEscapePressed: Qt.quit
-
-        // anchors.centerIn: parent
         ColumnLayout {
 
             GroupBox {
@@ -94,26 +74,6 @@ ApplicationWindow {
             }
             GroupBox {
                 RowLayout {
-                    id: buttonsLayout
-                    anchors.fill: parent
-                    Button {
-                        objectName: "printButton"
-                        // anchors.centerIn: parent
-                        text: "Print it"
-                        onClicked: printMessage("abcd")
-                    }
-
-                    Button {
-                        objectName: "getButton"
-                        // anchors.centerIn: parent
-                        text: "Get it"
-                        onClicked: { // multiple actions
-                            showMessage()
-                            // text.text = root.msg
-                            // text.text = "abc"
-                        }
-                    }
-
                     Button {
                         text: qsTr("Cancel")
                         onClicked: Qt.quit()
@@ -122,31 +82,6 @@ ApplicationWindow {
                     }
                 }
             } 
-            ExclusiveGroup {
-                id:group
-            }
-
-            GroupBox {
-                ColumnLayout {
-                    RadioButton {
-                        text: "button 1"
-                        exclusiveGroup: group
-                    }
-                    RadioButton {
-                        text: "button 2"
-                        exclusiveGroup: group
-                    }
-                    RadioButton {
-                        text: "button 3"
-                        exclusiveGroup: group
-                    }
-                }
-            }
-
-            TextField {
-                id: "text"
-                objectName: "text"
-            }
         }
     }
 }
