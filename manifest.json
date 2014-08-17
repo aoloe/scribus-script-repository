@@ -1,8 +1,8 @@
 {
     "name" : {
-        "en" : "The GitHub scripts collection",
+        "en" : "The GitHub scripts collection"
     },
     "scripts_ignore" : [
-        "script-download",
+        "script-download"
     ]
 }
