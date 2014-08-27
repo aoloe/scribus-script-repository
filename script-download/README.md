@@ -189,15 +189,16 @@ We also need a settigns dialog:
 
 # Todo
 
-- show a ✓ in the script list (for isntalled script)
-- how to store the script's settings (list of repositories, installed scripts, 
-- find out how to close the dialog (where to place a close push botton)
-- find out how to close the dialog by pressing ESC
-- only show one row of buttons, switched according to the (installed) status of the selected script (add / run + remove)
-- implement adding the repositories
-- extend the repository manifest to allow the translation of the script names (as shown in the list of scripts)
-- show the script description when a script is selected
-- define where to put the scripts and how to avoid conflicht among scripts with the same name but from different repositories (refuse to install is an option... or renaming at install?)
+- [ ] show a ✓ in the script list (for isntalled script)
+- [ ] how to store the script's settings (list of repositories, installed scripts, 
+- [ ] find out how to close the dialog (where to place a close push botton)
+- [x] find out how to close the dialog by pressing ESC
+- [ ] only show one row of buttons, switched according to the (installed) status of the selected script (add / run + remove)
+- [ ] implement adding the repositories
+- [ ] extend the repository manifest to allow the translation of the script names (as shown in the list of scripts)
+- [ ] show the script description when a script is selected
+- [ ] define where to put the scripts and how to avoid conflicht among scripts with the same name but from different repositories (refuse to install is an option... or renaming at install?)
+- [ ] find out how to resize the combobox and lists (http://qt-project.org/forums/viewthread/33188 ?)
 
 # Development resources
 

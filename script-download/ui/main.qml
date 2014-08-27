@@ -10,8 +10,10 @@ ApplicationWindow {
     title: qsTr("hey")
 
     Rectangle {
+        focus: true
+        Keys.onEscapePressed: Qt.quit()
+        Keys.priority: Keys.BeforeItem
         ColumnLayout {
-
             GroupBox {
                 RowLayout {
                     TextField {
@@ -78,7 +80,6 @@ ApplicationWindow {
                         text: qsTr("Cancel")
                         onClicked: Qt.quit()
                         Keys.onEscapePressed: Qt.quit()
-                        // Keys.onEscapePressed: Qt.quit()
                     }
                 }
             } 
