@@ -3,8 +3,12 @@
 #
 # usage:
 # scribus -g -py to-pdf.py file.sla
+#
+# license:
+# (c) MIT Ale Rimoldi
 
 import os
+import scribus
 
 if scribus.haveDoc() :
     filename = os.path.splitext(scribus.getDocName())[0]
