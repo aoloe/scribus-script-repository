@@ -8,7 +8,7 @@ You must have a document open.
 This script checks if the document contains image frames with a broken link.
 If any is found, it will ask if you want to look for the correct image and then
 prompt for the new location of the first image.
-It will then check all other image frames with a broken link and look for an image
+It will then check all other image frames with a broken link, and look for an image
 of the same name in the new location. It the image is there, the link will be
 replaced.
 
@@ -19,7 +19,6 @@ the wrong images.
 import scribus
 import os.path
 
-item = scribus.getAllObjects()
 page_n = scribus.pageCount()
 item_missing = []
 
