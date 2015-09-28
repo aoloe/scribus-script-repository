@@ -17,3 +17,8 @@ Please report bugs to http://github.com/aoloe/scribus-script-repository/
 ## Todo
 
 - implement it in "Extras > Manage images"
+- we should respect the current scale and offset but:
+  - `scribus.getImageScale()` exists.
+  - `scribus.getImageOffset()` does not exist even if `setImageOffset()` is there.
+  - `getScaleImageToFrame()`/`isScaleImageToFrame()` do not exist even if `setScaleImageToFrame()` is there.
+  - `loadImage()` removes the existing settings.
