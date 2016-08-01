@@ -2,7 +2,7 @@
 # Uses the same file name and replaces the .sla extension with .pdf
 #
 # usage:
-# scribus -g -py to-pdf.py file.sla
+# scribus -g -py to-pdf.py -- file.sla
 #
 # license:
 # (c) MIT Ale Rimoldi
