@@ -1,8 +1,8 @@
 """
-create "printable" guides and page margins for a draft
+create "printable" guides, page margins and placeholders for empty image frames.
 @author: ale rimoldi
-@version: 1.0 / 20110901
-@copyright (c) 2011 alessandro rimoldi under the mit license
+@version: 2.0 / 20160817
+@copyright (c) MIT license  2016, ale rimoldi
 http://www.opensource.org/licenses/mit-license.html
 """
 
@@ -13,51 +13,61 @@ except ImportError:
     print "This script only works from within Scribus"
     sys.exit(1)
 
-page = scribus.getPageSize()
-margin = scribus.getPageMargins()
+def drawPlaceholders():
+    page = scribus.getPageSize()
+    margin = scribus.getPageMargins()
+
+    # add the page margins
+    rectangle = scribus.createRect(margin[1], margin[0], (page[0] - margin[1] - margin[2]), (page[1] - margin[0] - margin[3]))
+    scribus.setFillColor('none', rectangle)
+    scribus.setLineColor('Blue', rectangle)
+    scribus.setLineWidth(0.4, rectangle)
+
+    # add horizontal and vertical guides
+    for item in scribus.getHGuides():
+        line = scribus.createLine(0, item , page[0], item)
+        scribus.setLineColor('Black', line)
+        scribus.setLineWidth(0.6, line)
+        scribus.setLineStyle(scribus.LINE_DASHDOT, line)
+
+    for item in scribus.getVGuides():
+        line = scribus.createLine(item, 0 , item, page[0])
+        scribus.setLineColor('Black', line)
+        scribus.setLineWidth(0.6, line)
+        scribus.setLineStyle(scribus.LINE_DASHDOT, line)
+
+    # add a "crossed frame" for missing images
+    for item in scribus.getAllObjects():
+        if scribus.getObjectType(item) == 'ImageFrame':
+            image = scribus.getImageFile(item)
+            if image == '':
+                pos = scribus.getPosition(item)
+                size = scribus.getSize(item)
+                rectangle = scribus.createRect(pos[0], pos[1], size[0], size[1])
+                scribus.setFillColor('none', rectangle)
+                scribus.setLineColor('Black', rectangle)
+                scribus.setLineWidth(0.4, rectangle)
+                line = scribus.createLine(pos[0], pos[1] , pos[0] + size[0], pos[1] + size[1])
+                scribus.setLineColor('Black', line)
+                scribus.setLineWidth(0.4, line)
+                line = scribus.createLine(pos[0], pos[1] + size[1], pos[0] + size[0], pos[1])
+                scribus.setLineColor('Black', line)
+                scribus.setLineWidth(0.4, line)
+
+
+page = 1
+pagenum = scribus.pageCount()
 
 layer = scribus.getActiveLayer()
 
-if ('guides' in scribus.getLayers()) :
-    scribus.setActiveLayer('guides')
+if ('placeholder' in scribus.getLayers()) :
+    scribus.setActiveLayer('placeholder')
 else:
-    scribus.createLayer('guides')
+    scribus.createLayer('placeholder')
 
-# add the page margins
-rectangle = scribus.createRect(margin[1], margin[0], (page[0] - margin[1] - margin[2]), (page[1] - margin[0] - margin[3]))
-scribus.setFillColor('none', rectangle)
-scribus.setLineColor('Blue', rectangle)
-scribus.setLineWidth(0.4, rectangle)
-
-# add horizontal and vertical guides
-for item in scribus.getHGuides():
-    line = scribus.createLine(0, item , page[0], item)
-    scribus.setLineColor('Black', line)
-    scribus.setLineWidth(0.6, line)
-    scribus.setLineStyle(scribus.LINE_DASHDOT, line)
-
-for item in scribus.getVGuides():
-    line = scribus.createLine(item, 0 , item, page[0])
-    scribus.setLineColor('Black', line)
-    scribus.setLineWidth(0.6, line)
-    scribus.setLineStyle(scribus.LINE_DASHDOT, line)
-
-# add a "crossed frame" for missing images
-for item in scribus.getAllObjects():
-    if scribus.getObjectType(item) == 'ImageFrame':
-        image = scribus.getImageFile(item)
-        if image == '':
-            pos = scribus.getPosition(item)
-            size = scribus.getSize(item)
-            rectangle = scribus.createRect(pos[0], pos[1], size[0], size[1])
-            scribus.setFillColor('none', rectangle)
-            scribus.setLineColor('Black', rectangle)
-            scribus.setLineWidth(0.4, rectangle)
-            line = scribus.createLine(pos[0], pos[1] , pos[0] + size[0], pos[1] + size[1])
-            scribus.setLineColor('Black', line)
-            scribus.setLineWidth(0.4, line)
-            line = scribus.createLine(pos[0], pos[1] + size[1], pos[0] + size[0], pos[1])
-            scribus.setLineColor('Black', line)
-            scribus.setLineWidth(0.4, line)
+while (page <= pagenum):
+    scribus.gotoPage(page)
+    drawPlaceholders()
+    page += 1
 
 scribus.setActiveLayer(layer)
