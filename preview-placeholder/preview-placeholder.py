@@ -61,7 +61,7 @@ if ('placeholder' in scribus.getLayers()) :
 else:
     scribus.createLayer('placeholder')
 
-for page in range(1, scribus.pageCount()):
+for page in range(1, scribus.pageCount() + 1):
     scribus.gotoPage(page)
     drawPlaceholders()
 
