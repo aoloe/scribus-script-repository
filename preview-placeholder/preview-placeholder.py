@@ -54,10 +54,6 @@ def drawPlaceholders():
                 scribus.setLineColor('Black', line)
                 scribus.setLineWidth(0.4, line)
 
-
-page = 1
-pagenum = scribus.pageCount()
-
 layer = scribus.getActiveLayer()
 
 if ('placeholder' in scribus.getLayers()) :
@@ -65,9 +61,8 @@ if ('placeholder' in scribus.getLayers()) :
 else:
     scribus.createLayer('placeholder')
 
-while (page <= pagenum):
+for page in range(1, scribus.pageCount()):
     scribus.gotoPage(page)
     drawPlaceholders()
-    page += 1
 
 scribus.setActiveLayer(layer)
