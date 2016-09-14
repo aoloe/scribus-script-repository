@@ -1,10 +1,19 @@
 # Look for all text frames with a name that start with pattern and
 # set the content to content.
 #
-# - The text frame must have a uniform formatting.
-# - The formatting must be applied to the whole frame (apply it from the
-#   properties palette when you're not in edit mode).
+# - Create an original document.
+# - Name all the fields that have to be synchronized with the same
+#   starting string (Month01, Month02, ...)
+# - Make a copy of the document for each actual document.
+# - Do not run this script on the original document.
+# - Set the "master" field to the correct value.
+# - Run the script.
 # - In 1.5.x use the frame patterns, instead.
+#
+# TODO:
+# - Get the pattern by stripping the numbers from the name
+#   of the current frame
+# - Find a way to rename the created frames.
 #
 # 2016-09-13 Ale Rimoldi
 #
@@ -32,7 +41,7 @@
 
 import scribus
 
-def fileMatchingTextFrame(pattern, content):
+def fileMatchingTextFrame(sampleFrameName, pattern):
     pagenum = scribus.pageCount()
     T = []
     # duplicateName = duplicate current frame
@@ -42,17 +51,19 @@ def fileMatchingTextFrame(pattern, content):
         strpage = str(page)
         T.append('Page '+ strpage + '\n\n')
         for item in d:
+            # print(item)
             frameName = item[0]
-            print(scribus.getStyle(frameName))
             if (item[1] == 4):
                 if (frameName.startswith(pattern)):
-                    print(frameName)
-                    # delete all frame
-                    contents = scribus.getAllText(item[0])
-                    scribus.deleteText(frameName)
-                    scribus.insertText(content, 0, frameName)
-        T.append('\n')
-    scribus.messageBox("Finished", "String replaced" ,icon=0,button1=1)
+                    # print(frameName)
+                    position = scribus.getPosition(frameName)
+                    scribus.selectObject(sampleFrameName)
+                    scribus.duplicateObject()
+                    #duplicateFrameName = scribus.getSelectedObject()
+                    scribus.moveObjectAbs(position[0], position[1])
+                    scribus.deleteObject(frameName)
+                    # TODO: rename the duplicate to the old frameName
+    # scribus.messageBox("Finished", "String replaced" ,icon=0,button1=1)
 
 if not scribus.haveDoc():
     scribus.messageBox('Usage Error', 'You need a Document open', icon=0, button1=1)
@@ -69,15 +80,20 @@ if scribus.selectionCount() > 1:
         "You have more than one frame selected.\nPlease select one text frame and try again.", scribus.ICON_WARNING, scribus.BUTTON_OK)
     sys.exit(2)
  
-currentFrame = scribus.getSelectedObject()
+currentFrameName = scribus.getSelectedObject()
+print(currentFrameName)
 
-if (currentFrame[1] != 4):
+if (scribus.getObjectType(currentFrameName) == 4):
     scribus.messageBox('Scribus - Usage Error', "You did not select a textframe. Try again.", scribus.ICON_WARNING, scribus.BUTTON_OK)
     sys.exit(2)
 
-duplicateFrameName = scribus.duplicateObject()
+scribus.duplicateObject()
+duplicateFrameName = scribus.getSelectedObject()
+
+print(duplicateFrameName)
 
 # valueDialog(caption, message [,defaultvalue])
-fileMatchingTextFrame("Monat", "Februar")
+fileMatchingTextFrame(duplicateFrameName, "Monat")
 
-deleteObject(duplicateFrameName)
+scribus.deleteObject(duplicateFrameName)
+# scribus.selectObject(currentFrameName) // we will be able to this if we can set the frame's name
