@@ -41,7 +41,7 @@ import re
 def remove_copy_prefix(text):
     for prefix in ("Copy of ", "Kopie von "):
         if text.startswith(prefix):
-            text = text[len(prefix):]
+            text = text[len(prefix)]
     return text
 
 def checkForOneFrameSelected() :
