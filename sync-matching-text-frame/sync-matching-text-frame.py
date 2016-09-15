@@ -62,7 +62,7 @@ def checkForOneFrameSelected() :
 
 def fileMatchingTextFrame(sampleFrameName, pattern):
     pagenum = scribus.pageCount()
-    for page in range(1, pagenum):
+    for page in range(1, pagenum + 1):
         scribus.gotoPage(page)
         d = scribus.getPageItems()
         for item in d:
