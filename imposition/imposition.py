@@ -58,7 +58,7 @@ def main():
         page_size = page_sizes[page_size]
 
 
-        pdf.file = filename + ".pdf"
+        pdf.file = filename + '-' + page_size.lower() + '.pdf'
         pdf.save()
 
         single_sided = 'single' in sys.argv
@@ -76,7 +76,7 @@ def main():
         pdf.save()
 
         # os.system("pdfnup --nup 2x2 --frame false --no-landscape " + filename + "-reordered.pdf --outfile " + filename.replace("a6", "a4") + ".pdf")
-        call(['pdfnup', '--nup', '2x2', '--frame', 'false', '--no-landscape', filename + '-reordered.pdf', '--outfile', filename.replace('a6', 'a4') + '.pdf'])
+        call(['pdfnup', '--nup', '2x2', '--frame', 'false', '--no-landscape', filename + '-reordered.pdf', '--outfile', filename + "-a4.pdf"])
         os.remove(pdf.file)
     else:
         print("No file open");
@@ -102,7 +102,7 @@ def get_a4_pages_from_a5(single, pages_count):
             pages = pages_layout[pages_count]
     else:
         pages_layout = {
-            1: [1, 1],
+            1: [1, 1, 1, 1],
             2: [1, 1, 2, 2],
             4: [0], # just use pdfbook
             8: [0], # just use pdfbook
