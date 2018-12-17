@@ -54,8 +54,9 @@ for filename in filenames:
     if page <= n_pages:
         scribus.gotoPage(page)
     else:
-        # TODO: currently this does not work if there are multiple master pages
-        # (facing pages). you need to create all pages before loading the images.
+        # TODO: currently this does not work if the names of the default master pages
+        # are not in the language of the GUI.
+        # if it's the case you need to create all pages before loading the images.
         scribus.newPage(-1)
         scribus.gotoPage(scribus.pageCount())
     new_image = scribus.createImage(x, y, width, height)
