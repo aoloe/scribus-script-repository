@@ -67,13 +67,17 @@ class ScribusFormatter(Formatter):
         style_name = self.character_styles.get(token_type, self.base_char_style)
         print(self.existing_styles)
         if style_name not in self.existing_styles:
-            # TODO: self.style[token] contains a "standard" definition for the style
-            print('adding style '+style_name)
+            color = self.style.style_for_token(token_type).get('color')
             self.existing_styles.append(style_name)
-            # #TODO: Create our own colors (except black)
-            # defineColorRGB("name", r, g, b) 
+            arguments = {}
+            if color:
+                scribus.defineColorRGB(style_name,
+                    *[int(color[i:i+2], 16) for i in range(0, 6, 2)]);
+                arguments['fillcolor'] = style_name
+            # TODO: add other style elements (underline, italic, bold)
+            # (bold and italic won't be easy)
             # TODO: add the parent_style to the API
-            scribus.createCharStyle(style_name)
+            scribus.createCharStyle(style_name, **arguments)
 
         return style_name
 
@@ -103,5 +107,6 @@ if not lexer:
 # TODO: do nothing is the lexer is 'text' (guess_lexer did not find anything better)
 # print(lexer)
 
-code = scribus.getAllText().decode('utf-8')
+# code = scribus.getAllText().decode('utf-8')
+code = scribus.getAllText()
 highlight(code, lexer, ScribusFormatter(len(code)))

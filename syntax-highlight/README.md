@@ -47,10 +47,14 @@ for i in range(3):
 - [ ] Make sure that a text frame is selected.
 - [ ] Allow highlighting a text selection.
 - [ ] Make sure that the character style `Code` is defined
-- [ ] Create the colors used by the highlither
+- [x] Create the colors used by the highlither
   - Their names should be prefixed with `Code_`
 - [ ] Create the character styles used for the specific code snippet
   - [ ] Create the styles with the default formatting defined by Pygments
+	- [x] color
+	- [ ] underline
+	- [ ] bold
+	- [ ] italic
   - [ ] Base the new styles on the `Code` style (needs a patch for `createCharStyle()`).
 - [ ] Complete the matching between token types and styles
   - We don't want one style for each possible token type. Which types do we need?
