@@ -103,5 +103,5 @@ if not lexer:
 # TODO: do nothing is the lexer is 'text' (guess_lexer did not find anything better)
 # print(lexer)
 
-code = scribus.getAllText()
+code = scribus.getAllText().decode('utf-8')
 highlight(code, lexer, ScribusFormatter(len(code)))

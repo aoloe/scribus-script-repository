@@ -53,7 +53,7 @@ for i in range(3):
   - [ ] Create the styles with the default formatting defined by Pygments
   - [ ] Base the new styles on the `Code` style (needs a patch for `createCharStyle()`).
 - [ ] Complete the matching between token types and styles
-  - We don't want one style for each possible token type
+  - We don't want one style for each possible token type. Which types do we need?
 - [ ] any way to create this as a c++ plugin?
   - https://doc.qt.io/qt-5/qtwidgets-richtext-syntaxhighlighter-example.html
 	- but, then, i will probably have to recreate the lexers
