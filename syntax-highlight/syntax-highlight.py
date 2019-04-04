@@ -1,5 +1,6 @@
 import sys
 from pygments import highlight
+from pygments.util import ClassNotFound as pygments_classNotFound
 
 try: 
     import scribus
@@ -29,6 +30,7 @@ class ScribusFormatter(Formatter):
             Token.Literal.String.Single: self.base_char_style+'_literal',
 
             Token.Name: self.base_char_style,
+            Token.Operator: self.base_char_style+'_operator',
             Token.Operator.Word: self.base_char_style+'_keyword',
             Token.Name.Builtin: self.base_char_style+'_stdlib',
             Token.Literal.Number.Integer: self.base_char_style+'_literal',
@@ -85,20 +87,25 @@ class ScribusFormatter(Formatter):
 
 print('=====')
 
+code = scribus.getAllText()
+
 # TODO: read the item's attributes
-attribute = 'python'
+attribute = ''
+for a in scribus.getObjectAttributes():
+    if a['Name'] == 'syntax_highlight':
+        attribute = a['Value']
 
 if attribute != '':
     try:
         from pygments.lexers import get_lexer_by_name
         lexer = get_lexer_by_name(attribute)
-    except pygments.util.ClassNotFound:
+    except pygments_classNotFound:
         pass
 else:
     from pygments.lexers import guess_lexer
     try:
         lexer = guess_lexer(code)
-    except pygments.util.ClassNotFound:
+    except pygments_classNotFound:
         pass
 
 if not lexer:
@@ -108,5 +115,4 @@ if not lexer:
 # print(lexer)
 
 # code = scribus.getAllText().decode('utf-8')
-code = scribus.getAllText()
 highlight(code, lexer, ScribusFormatter(len(code)))

@@ -14,6 +14,8 @@ Using virtual environment will probably not work (well), since you will need to 
 
 Select the text frame with the code to be highlighted and run the script.
 
+If Pygments cannot guess the language, create an item attribute (context menu > Attributes...) with named `syntax_highlight` with the language name as its value (see the [Pygment's languages list](http://pygments.org/docs/lexers/)).
+
 ## Notes
 
 ### The basic tokens to get started
@@ -41,12 +43,13 @@ for i in range(3):
 
 ## Todo
 
-- [ ] Actually read the content of the frame
-- [ ] Optionally read the language from the item attributes
-- [ ] Make sure that the characte styles are reset before setting the new ones.
+- [x] Actually read the content of the frame
+- [x] Optionally read the language from the item attributes
+- [x] Make sure that the characte styles are reset before setting the new ones.
 - [ ] Make sure that a text frame is selected.
 - [ ] Allow highlighting a text selection.
-- [ ] Make sure that the character style `Code` is defined
+  - Probably needs a new scripter API command.
+- [x] Make sure that the character style `Code` is defined
 - [x] Create the colors used by the highlither
   - Their names should be prefixed with `Code_`
 - [ ] Create the character styles used for the specific code snippet
@@ -56,6 +59,7 @@ for i in range(3):
 	- [ ] bold
 	- [ ] italic
   - [ ] Base the new styles on the `Code` style (needs a patch for `createCharStyle()`).
+	- needs a patch for the `createCharStyle()` API command.
 - [ ] Complete the matching between token types and styles
   - We don't want one style for each possible token type. Which types do we need?
 - [ ] any way to create this as a c++ plugin?
