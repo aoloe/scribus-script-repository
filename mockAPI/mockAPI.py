@@ -30,5 +30,15 @@ class Scribus :
         return True
     def setBaseLine(self, line_height_mm, margin_top) :
         return True
+    def selectText(self, start, end, frame) :
+        pass
+    def getCharStyles(self) :
+        return []
+    def setCharacterStyle(self, name) :
+        pass
+    def createCharStyle(self, style_name, **keywords):
+        pass
+    def getSelectedObject(self):
+        return 'item'
 
 # scribus = Scribus()
