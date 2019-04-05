@@ -92,8 +92,10 @@ code = scribus.getAllText()
 # TODO: read the item's attributes
 attribute = ''
 for a in scribus.getObjectAttributes():
-    if a['Name'] == 'syntax_highlight':
+    if a['Name'] == 'syntax-highlight':
         attribute = a['Value']
+
+print('>>>> '+attribute)
 
 if attribute != '':
     try:

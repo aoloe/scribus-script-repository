@@ -14,7 +14,7 @@ Using virtual environment will probably not work (well), since you will need to 
 
 Select the text frame with the code to be highlighted and run the script.
 
-If Pygments cannot guess the language, create an item attribute (context menu > Attributes...) with named `syntax_highlight` with the language name as its value (see the [Pygment's languages list](http://pygments.org/docs/lexers/)).
+If Pygments cannot guess the language, create an item attribute (context menu > Attributes...) with named `syntax-highlight` with the language name as its value (see the [Pygment's languages list](http://pygments.org/docs/lexers/)).
 
 ## Notes
 
