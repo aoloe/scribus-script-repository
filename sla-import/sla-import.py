@@ -36,6 +36,11 @@ parser.add_argument(
     help='Imports pages before instead of after'
 )
 
+parser.add_argument(
+    '--output',
+    help='Creates new SLA file under specified path'
+)
+
 def get_pages_range(sla_file):
     scribus.openDoc(sla_file)
     l = range(1, scribus.pageCount() + 1)
@@ -53,5 +58,13 @@ insert_position = 0 if args.before == True else 1 # 0 = before; 1 = after
 # Importing `import_file`
 scribus.openDoc(base_file)
 scribus.importPage(import_file, get_pages_range(import_file), 1, insert_position, page_number)
-scribus.saveDoc()
+
+# Either overwriting `import_file` ..
+if args.output == None:
+    scribus.saveDoc()
+# .. or creating new `output` file (requires `--output`)
+else:
+    scribus.saveDocAs(args.output)
+
 scribus.closeDoc()
+
