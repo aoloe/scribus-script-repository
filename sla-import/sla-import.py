@@ -14,7 +14,7 @@ import scribus
 import argparse
 
 parser = argparse.ArgumentParser(
-    description='Creates a pdf at the original size and one imposed on A4.'
+    description='Imports all pages of an `.sla` file into another one'
 )
 
 parser.add_argument(
