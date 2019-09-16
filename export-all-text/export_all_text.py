@@ -1,8 +1,9 @@
 # Extracts the text from a document, saving to a text file
 # also lists image files with pathnames
-# 2006.03.04 Gregory Pittman
-# 2008.02.28 Petr Vanek - fileDialog replaces valueDialog
-# this version 2008.02.28
+# 2006-03-04 Gregory Pittman
+# 2008-02-28 Petr Vanek - fileDialog replaces valueDialog
+# 2019-09-16 Ale Rimoldi - modernize the code
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -10,42 +11,36 @@
 
 import scribus
 
-def exportText(textfile):
-    page = 1
-    pagenum = scribus.pageCount()
-    T = []
+def exportText(filename):
+    file_content = []
     content = []
-    while (page <= pagenum):
+    for page in range(1, scribus.pageCount() + 1):
         scribus.gotoPage(page)
-        d = scribus.getPageItems()
-        strpage = str(page)
-        T.append('Page '+ strpage + '\n\n')
-        for item in d:
-            if (item[1] == 4):
+        file_content.append('Page '+ str(page) + '\n\n')
+        for item in scribus.getPageItems():
+            if item[1] == 4:
                 contents = scribus.getAllText(item[0])
-                if (contents in content):
+                if contents in content:
                     contents = 'Duplication, perhaps linked-to frame'
-                T.append(item[0]+': '+ contents + '\n\n')
+                file_content.append(item[0]+': '+ contents + '\n\n')
                 content.append(contents)
-            elif (item[1] == 2):
+            elif item[1] == 2:
                 imgname = scribus.getImageFile(item[0])
-                T.append(item[0]+': ' + imgname + '\n')
-        page += 1
-        T.append('\n')
-    output_file = open(textfile,'w')
-    output_file.writelines(T)
+                file_content.append(item[0]+': ' + imgname + '\n')
+        file_content.append('\n')
+    output_file = open(filename, 'w')
+    output_file.writelines(file_content)
     output_file.close()
-    endmessage = textfile + ' was created'
-    scribus.messageBox("Finished", endmessage,icon=0,button1=1)
+    # scribus.messageBox("Finished", filename + ' was created', icon=0, button1=1)
 
 
 if scribus.haveDoc():
-    textfile = scribus.fileDialog('Enter name of file to save to', \
+    filename = scribus.fileDialog('Enter name of file to save to', \
                                   filter='Text Files (*.txt);;All Files (*)')
     try:
-        if textfile == '':
+        if filename == '':
             raise Exception
-        exportText(textfile)
+        exportText(filename)
     except Exception, e:
         print e
 
