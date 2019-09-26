@@ -22,4 +22,6 @@ An untested version of `load-images.py` that copies the selected frame in the ne
 
 Load all images from a directory into the empty image frames in the current document.
 
-You need to create enough (empty) image frames before running the script (see `edit > multiduplicate` for ways of duplicating your frames).
+The script will ask for the directory with your images.
+
+You need to create enough (empty) image frames, before running the script (see `item > duplicate > multiple duplicate` for ways of duplicating your frames).

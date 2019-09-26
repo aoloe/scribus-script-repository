@@ -1,6 +1,3 @@
-# - get the directory with all images
-# - run the script
-#
 # - in a document add empty image frames
 # - all empty image frames will be filled with the images collected
 import os
