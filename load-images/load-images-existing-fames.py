@@ -9,7 +9,7 @@ if not scribus.haveDoc():
     sys.exit()
 
 def get_all_images(path):
-    extensions = ['jpg', 'JPG', 'png', 'PNG', 'tif', 'TIF']
+    extensions = ['jpg', 'jpeg', 'JPG', 'png', 'PNG', 'tif', 'TIF']
     filenames = [f for f in os.listdir(path)
                  if any(f.endswith(ext) for ext in extensions)]
     filenames.sort()
@@ -34,6 +34,8 @@ def get_all_empty_images_frames():
 path = scribus.fileDialog("Pick a directory", scribus.getDocName(), isdir = True)
 if path == '':
    scribus.messagebarText("No directory selected.")
+
+print('chuila')
 
 images = get_all_images(path)
 if not images:
