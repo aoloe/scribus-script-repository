@@ -34,8 +34,7 @@ def get_all_empty_images_frames():
 path = scribus.fileDialog("Pick a directory", scribus.getDocName(), isdir = True)
 if path == '':
    scribus.messagebarText("No directory selected.")
-
-print('chuila')
+   sys.exit()
 
 images = get_all_images(path)
 if not images:
