@@ -50,3 +50,4 @@ This script is in its early stages.
 # Future plans
 
 - Allow the creation of a single Pdf with all the created content.
+  - for this we will probably need to inspect the content of groups: <https://bugs.scribus.net/view.php?id=15889>
