@@ -41,6 +41,30 @@ for i in range(3):
 - Token.Name.Builtin: for
 - Token.Literal.Number.Integer: 3
 
+### Patches
+
+There is a not yet merge patch that is useful: it creates a new style with a sane font size.
+
+```
+diff --git a/scribus/plugins/scriptplugin/cmdstyle.cpp b/scribus/plugins/scriptplugin/cmdstyle.cpp
+index 723435ee7..47561fcfa 100644
+--- a/scribus/plugins/scriptplugin/cmdstyle.cpp
++++ b/scribus/plugins/scriptplugin/cmdstyle.cpp
+@@ -116,8 +116,11 @@ PyObject *scribus_createcharstyle(PyObject* /* self */, PyObject* args, PyObject
+ 		const_cast<char*>("tracking"),
+ 		const_cast<char*>("language"),
+ 		nullptr};
++
++	const auto defaultStyle = ScCore->primaryMainWindow()->doc->charStyles().getDefault();
++
+ 	char *Name = const_cast<char*>(""), *Font = const_cast<char*>(""), *Features = const_cast<char*>("inherit"), *FillColor = const_cast<char*>("Black"), *FontFeatures = const_cast<char*>(""), *StrokeColor = const_cast<char*>("Black"), *Language = const_cast<char*>("");
+-	double FontSize = 200, FillShade = 1, StrokeShade = 1, ScaleH = 1, ScaleV = 1, BaselineOffset = 0, ShadowXOffset = 0, ShadowYOffset = 0, OutlineWidth = 0, UnderlineOffset = 0, UnderlineWidth = 0, StrikethruOffset = 0, StrikethruWidth = 0, Tracking = 0;
++	double FontSize = defaultStyle->fontSize() / 10, FillShade = 1, StrokeShade = 1, ScaleH = 1, ScaleV = 1, BaselineOffset = 0, ShadowXOffset = 0, ShadowYOffset = 0, OutlineWidth = 0, UnderlineOffset = 0, UnderlineWidth = 0, StrikethruOffset = 0, StrikethruWidth = 0, Tracking = 0;
+ 	if (!PyArg_ParseTupleAndKeywords(args, keywords, "es|esdesesdesddddddddddddes", keywordargs,
+ 																									"utf-8", &Name, "utf-8", &Font, &FontSize, "utf-8", &Features,
+ 																									"utf-8", &FillColor, &FillShade, "utf-8", &StrokeColor, &StrokeShade, &BaselineOffset, &ShadowXOffset,
+```
+
 ## Todo
 
 - [x] Actually read the content of the frame
@@ -62,6 +86,7 @@ for i in range(3):
 	- needs a patch for the `createCharStyle()` API command.
 - [ ] Complete the matching between token types and styles
   - We don't want one style for each possible token type. Which types do we need?
+- [ ] if no attribute is set, the scripter should ask for a language and set it... the auto detection does not work.
 - [ ] any way to create this as a c++ plugin?
   - https://doc.qt.io/qt-5/qtwidgets-richtext-syntaxhighlighter-example.html
 	- but, then, i will probably have to recreate the lexers

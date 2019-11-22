@@ -29,7 +29,11 @@ Finally:
 - the baseline grid defined
 
 
-LICENSE:
+## Notes
+
+- In Scribus' document settings it's possible to set the baseline offset... so we are much more free about how to set the top and bottom margins.
+
+## License:
 
 This program is free software under the MIT license.
 
