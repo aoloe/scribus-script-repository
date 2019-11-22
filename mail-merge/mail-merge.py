@@ -87,7 +87,6 @@ def main():
             if item[1] == 4:
                 placeholders = get_text_placeholders(item[0])
                 if placeholders:
-                    # text_frames.append((item[0], reversed(placeholders)))
                     text_frames.append((item[0], placeholders))
 
     sla_template_path = Path(scribus.getDocName())
