@@ -21,14 +21,12 @@ if not scribus.haveDoc():
     scribus.messageBox('Script failed', 'You need an open template document.')
     sys.exit(2)
 
-def get_text_placeholders(frame):
+def get_placeholders(text):
+    """ return a list of keys and placeholders indexes in the inverse order """
     placeholders = []
 
     len_start = len(PLACEHOLDER_START)
     len_end = len(PLACEHOLDER_END)
-
-    scribus.selectText(0, 0, frame)
-    text = scribus.getText(frame)
 
     i = text.find(PLACEHOLDER_START)
     while i != -1:
@@ -43,13 +41,15 @@ def get_text_placeholders(frame):
 
     return placeholders
 
-def get_image_placeholder(frame):
+def get_text_placeholders(frame):
+
+    scribus.selectText(0, 0, frame)
+    text = scribus.getText(frame)
+    return get_placeholders(text)
+
+def get_image_placeholders(frame):
     filename = scribus.getImageFile(frame)
-    i = filename.find(PLACEHOLDER_START)
-    j = filename.find(PLACEHOLDER_END, i)
-    if i != -1 and j != -1 and i < j:
-        return (i, j)
-    return ()
+    return get_placeholders(filename)
 
 def fill_text_placeholders(frame, fields, row):
     for field in fields:
@@ -64,8 +64,14 @@ def fill_text_placeholders(frame, fields, row):
             scribus.deleteText(frame)
             
 def fill_image_placeholders(frame, fields, row):
-    # print(frame, fields, row)
-    pass
+    filename = scribus.getImageFile(frame)
+    for field in fields:
+        print(field)
+        new_filename = filename[0:field['start']] + \
+            row[field['key']] + \
+            filename[field['end'] + 1:]
+        # print(new_filename)
+        scribus.loadImage(new_filename, frame)
 
 text_frames = []
 image_frames = []
@@ -74,9 +80,9 @@ for page in range(1, scribus.pageCount() + 1):
     scribus.gotoPage(page)
     for item in scribus.getPageItems():
         if item[1] == 2:
-            placeholder = get_image_placeholder(item[0])
-            if placeholder:
-                text_frames.append((item[0], placeholder))
+            placeholders = get_image_placeholders(item[0])
+            if placeholders:
+                image_frames.append((item[0], placeholders))
         if item[1] == 4:
             placeholders = get_text_placeholders(item[0])
             if placeholders:

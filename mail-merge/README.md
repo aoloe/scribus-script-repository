@@ -17,7 +17,7 @@ This script is in its early stages.
 - The first line of the `csv` file is a header with the name of the fields.
 - You need to save the _template_ document before running the script (unsaved changes will be used for the first row and then discarded for the other rows).
 - The script replaces all occurences of the placeholders with the matching values in the current row of the `csv` file.
-- It creates one Pdf per row, stores it next to the Scribus file and adds the value of each first field to the file name.
+- It creates one Pdf per row in the CSV, stores it next to the Scribus file and adds the value of each first field to the file name.
 - After each row, the document is reverted to the saved state and the replacements are discarded.
 
 ## Usage
@@ -28,12 +28,11 @@ This script is in its early stages.
 - Put a `csv` with the same name as the Scribus document close to it (if your document is named `letter.sla` you will need a `letter.csv` as the data source).
 - In the first line of the `csv` file put the name of the placeholders, separated by commas (it must be a valid `csv` file: you will probably want to generate the file with a spreadsheet and avoid filling it by hand)
 - The other rows of the `csv` files will contain the values, also speparated by commas.
+- For images use names like `images/portrait-{name}.jpg`, where `{name}` will be replaced by the name of the person. The images will then need to be in the same directory as the placeholder (theoretically, you can use placeholders to modify the path to the image).
 
 
 ## Todo
 
-- support images.
-  - For image placeholder use names like `images/portrait-{name}.jpg`. The images will then need to be in the given directory (mostly, in the same one as the placeholder)
 - read data from json files
 - define and support the `yaml` project file.
   - alternative placeholder markers
