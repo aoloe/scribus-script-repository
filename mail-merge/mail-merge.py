@@ -1,4 +1,8 @@
 # encoding: utf-8
+# (c) MIT ale rimoldi
+# Simple Mail Merge script for Scribus.
+# For details see the README file.
+
 try:
     import scribus
 except ImportError:
@@ -112,4 +116,3 @@ for row in reader:
     scribus.docChanged(True)
     scribus.revertDoc()
 scribus.setRedraw(True)
-

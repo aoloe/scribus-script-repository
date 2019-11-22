@@ -50,3 +50,10 @@ This script is in its early stages.
 # Future plans
 
 - Allow the creation of a single Pdf with all the created content.
+- Fill one single document with multiple records:
+  - the scribus Generator is doing many records on a page by using a special command to be put in a text frame (supposing that the order of the frames is _right_)
+  - we should group items and set a specific attribute (in that case we should inspect groups while scanning the document for fields)
+  - it should duplicate the page before starting the replacement and automatically create new pages when there are no fillable records (we will need to rescan the page to discover the new frame names)
+  - this might be a separate script (we can merge them later if it's easier)
+  - see the tickets 15889 and 15888 for the missing features in the scripter.
+- Variable colors (cf. the scribus generator)
