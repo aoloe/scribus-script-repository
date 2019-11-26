@@ -10,15 +10,16 @@ Configuration is planned trough a `yaml` file with the same name as the Scribus 
 
 This script is in its early stages.
 
-- At the time of writing, you need to [patch Scribus](https://bugs.scribus.net/view.php?id=15886) to get the `revertDoc()` scripter command and run this script.
 - The script can be partially (for now) configured with a file that has the same name as the template, but the suffix `.conf.json`
 - It goes through the whole document and looks for placeholders (_labels_ between `{` and `}`) in all text frames and stores the list of frame names and placeholder positions.
 - It reads a `csv` file with the same name as the Scribus file, stored next to it.
 - The first line of the `csv` file is a header with the name of the fields.
 - You need to save the _template_ document before running the script (unsaved changes will be used for the first row and then discarded for the other rows).
 - The script replaces all occurences of the placeholders with the matching values in the current row of the `csv` file.
-- It creates one Pdf per row in the CSV, stores it next to the Scribus file and adds the value of each first field to the file name.
-- After each row, the document is reverted to the saved state and the replacements are discarded.
+- It can create one Pdf for each row in the CSV
+  - The Pdf is saved it next to the Scribus file, with the value of each first field added to the file name.
+  - After each row, the document is reverted to the saved state and the replacements are discarded.
+- It can add pages to the Scribus document, one page per row in the CSV.
 
 ## Usage
 
@@ -50,12 +51,13 @@ This script is in its early stages.
 ## Future plans
 
 - Allow the creation of a single Pdf with all the created content.
-- Fill one single document with multiple records:
+- Fill one single page with multiple records:
   - the scribus Generator is doing many records on a page by using a special command to be put in a text frame (supposing that the order of the frames is _right_)
   - we should group items and set a specific attribute (in that case we should inspect groups while scanning the document for fields)
   - it should duplicate the page before starting the replacement and automatically create new pages when there are no fillable records (we will need to rescan the page to discover the new frame names)
   - this might be a separate script (we can merge them later if it's easier)
   - see the tickets 15889 and 15888 for the missing features in the scripter.
+  - for this we will probably need to inspect the content of groups: <https://bugs.scribus.net/view.php?id=15889>
 - Variable colors (cf. the scribus generator)
 
 
