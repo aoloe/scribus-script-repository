@@ -11,7 +11,7 @@ Configuration is planned trough a `yaml` file with the same name as the Scribus 
 This script is in its early stages.
 
 - At the time of writing, you need to [patch Scribus](https://bugs.scribus.net/view.php?id=15886) to get the `revertDoc()` scripter command and run this script.
-- The script cannot yet be configured, only the default behavior is implemented.
+- The script can be partially (for now) configured with a file that has the same name as the template, but the suffix `.conf.json`
 - It goes through the whole document and looks for placeholders (_labels_ between `{` and `}`) in all text frames and stores the list of frame names and placeholder positions.
 - It reads a `csv` file with the same name as the Scribus file, stored next to it.
 - The first line of the `csv` file is a header with the name of the fields.
@@ -30,6 +30,7 @@ This script is in its early stages.
 - The other rows of the `csv` files will contain the values, also speparated by commas.
 - For images use names like `images/portrait-{name}.jpg`, where `{name}` will be replaced by the name of the person. The images will then need to be in the same directory as the placeholder (theoretically, you can use placeholders to modify the path to the image).
 
+## Configuration
 
 ## Todo
 
@@ -46,7 +47,7 @@ This script is in its early stages.
 - log errors
   - unmatched fields
 
-# Future plans
+## Future plans
 
 - Allow the creation of a single Pdf with all the created content.
 - Fill one single document with multiple records:
@@ -56,3 +57,26 @@ This script is in its early stages.
   - this might be a separate script (we can merge them later if it's easier)
   - see the tickets 15889 and 15888 for the missing features in the scripter.
 - Variable colors (cf. the scribus generator)
+
+
+## Snippets
+
+### Import pages
+
+A try to get the original pages through `importPage` (fails, because Scribus renames the items in non predictable way: <https://bugs.scribus.net/view.php?id=15960>)
+
+```py
+scribus.saveDocAs(str(pdf_path.joinpath(pdf_base_filename + '-' + 'merged'+'.sla')))
+page_count = scribus.pageCount()
+for row in reader:
+    n = scribus.pageCount()
+    for frame, placeholders in text_frames:
+        fill_text_placeholders(frame, placeholders, row)
+        scribus.setItemName(frame + '-' + str(n), frame)
+    for frame, placeholders in image_frames:
+        fill_image_placeholders(frame, placeholders, row)
+        scribus.setItemName(frame + '-' + str(n), frame)
+    scribus.importPage(sla_template_filename, tuple(range(1, page_count + 1)))
+for i in range(0, page_count):
+    scribus.deletePage(scribus.pageCount())
+```

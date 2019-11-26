@@ -1,0 +1,9 @@
+{
+    "data": {
+        "file": "sample.csv"
+    },
+    "output": {
+        "pdf": false,
+        "single-sla": true
+    }
+}
