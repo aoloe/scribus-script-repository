@@ -35,18 +35,22 @@ This script is in its early stages.
 
 ## Todo
 
-- read data from json files
-- define and support the `yaml` project file.
-  - alternative placeholder markers
-  - data source
-  - custom separator for json files?
-  - pdf
+- [ ] read data from json files
+- [ ] finish configuration file.
+  - [ ] alternative placeholder markers
+    - [x] use the placeholders from the configuration
+    - [ ] use a variable length for the placeholders
+  - [ ] data source
+  - [ ] custom separator for csv files
+  - [ ] pdf settings
     - version
     - target directory
     - variable file name field
     - base name
-- log errors
+- [ ] log errors
   - unmatched fields
+- [ ] read the default settings from a json file stores next to `mail-merge.py`
+  - how to get the current script path? (when the script runs in scribus)
 
 ## Future plans
 

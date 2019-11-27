@@ -15,14 +15,11 @@ import os.path
 
 from pathlib import Path
 
-PLACEHOLDER_START = '{'
-PLACEHOLDER_END = '}'
-
 if not scribus.haveDoc():
     scribus.messageBox('Script failed', 'You need an open template document.')
     sys.exit(2)
 
-# TODO: read from a mail-merge.json next to mail-merge.py (how to get the current script path?)
+# TODO: read from a conf.json file
 CONFIGURATION_DEFAULT = {
     'placeholder': {
         'start': '{',
@@ -39,7 +36,8 @@ CONFIGURATION_DEFAULT = {
 }
 
 def merge_configuration(default, local):
-    """ merge dict local into default (https://stackoverflow.com/a/7205107/5239250)"""
+    """ merge the local dict into the default one
+        (https://stackoverflow.com/a/7205107/5239250)"""
     for key in local:
         if key in default:
             if isinstance(default[key], dict) and isinstance(local[key], dict):
@@ -52,6 +50,7 @@ def merge_configuration(default, local):
             default[key] = local[key]
 
 def get_configuration(scribus_doc):
+    """ return the project configuration merged with the default ones"""
     configuration = CONFIGURATION_DEFAULT
     path = Path(scribus_doc)
     config_filename = path.with_suffix('.conf.json')
@@ -61,54 +60,6 @@ def get_configuration(scribus_doc):
                 json_data = json.load(json_file)
                 merge_configuration(configuration, json_data)
     return configuration
-
-def get_item_placeholders(text):
-    """ return a list of keys and placeholders indexes in the inverse order """
-    placeholders = []
-
-    i = text.find(CONFIGURATION['placeholder']['start'])
-    while i != -1:
-        j = text.find(CONFIGURATION['placeholder']['end'], i)
-        if j == -1:
-            break
-
-        key = text[i + 1:j]
-        placeholders.insert(0, {'key': key, 'start': i, 'end': j})
-        i = text.find(CONFIGURATION['placeholder']['start'], j)
-
-    return placeholders
-
-def get_text_placeholders(frame):
-
-    scribus.selectText(0, 0, frame)
-    text = scribus.getText(frame)
-    return get_item_placeholders(text)
-
-def get_image_placeholders(frame):
-    filename = scribus.getImageFile(frame)
-    return get_item_placeholders(filename)
-
-def fill_text_placeholders(frame, fields, row):
-    for field in fields:
-        # TODO: what happens if the field is not defined? delete it? log it as an error?
-        if field['key'] in row:
-            scribus.insertText(row[field['key']], field['start'] + 1, frame)
-            # delete key}
-            scribus.selectText(field['start'] + len(row[field['key']]) + 1, field['end'] - field['start'], frame)
-            scribus.deleteText(frame)
-            # delete {
-            scribus.selectText(field['start'], 1, frame)
-            scribus.deleteText(frame)
-
-def fill_image_placeholders(frame, fields, row):
-    filename = scribus.getImageFile(frame)
-    for field in fields:
-        print(field)
-        new_filename = filename[0:field['start']] + \
-            row[field['key']] + \
-            filename[field['end'] + 1:]
-        # print(new_filename)
-        scribus.loadImage(new_filename, frame)
 
 def duplicate_content(pages, named_items):
     """ duplicate the content of pages at the end of the document and track the new item names for the items in named_items
@@ -130,9 +81,51 @@ def duplicate_content(pages, named_items):
                 result[item] = scribus.getSelectedObject()
     return result
 
-# TODO: how to correctly use the values from the config?
-len_start = len(PLACEHOLDER_START)
-len_end = len(PLACEHOLDER_END)
+def get_placeholders_from_string(text):
+    """ return a list of keys and placeholders indexes in the inverse order """
+    placeholders = []
+
+    i = text.find(CONFIGURATION['placeholder']['start'])
+    while i != -1:
+        j = text.find(CONFIGURATION['placeholder']['end'], i)
+        if j == -1:
+            break
+
+        key = text[i + 1:j]
+        placeholders.insert(0, {'key': key, 'start': i, 'end': j})
+        i = text.find(CONFIGURATION['placeholder']['start'], j)
+
+    return placeholders
+
+def get_text_placeholders(frame):
+    scribus.selectText(0, 0, frame)
+    text = scribus.getText(frame)
+    return get_placeholders_from_string(text)
+
+def get_image_placeholders(frame):
+    filename = scribus.getImageFile(frame)
+    return get_placeholders_from_string(filename)
+
+def fill_text_placeholders(frame, fields, row):
+    for field in fields:
+        # TODO: currently, if the fields is not found it's left as is, with no warning
+        if field['key'] in row:
+            scribus.insertText(row[field['key']], field['start'] + 1, frame)
+            # delete "key}"
+            scribus.selectText(field['start'] + len(row[field['key']]) + 1, field['end'] - field['start'], frame)
+            scribus.deleteText(frame)
+            # delete "{"
+            scribus.selectText(field['start'], 1, frame)
+            scribus.deleteText(frame)
+
+def fill_image_placeholders(frame, fields, row):
+    filename = scribus.getImageFile(frame)
+    for field in fields:
+        print(field)
+        new_filename = filename[0:field['start']] + \
+            row[field['key']] + \
+            filename[field['end'] + 1:]
+        scribus.loadImage(new_filename, frame)
 
 def get_placeholders():
     text_frames = []
@@ -153,13 +146,12 @@ def get_placeholders():
     return text_frames, image_frames
 
 def main():
-
     text_frames, image_frames = get_placeholders()
 
     sla_template_filename = scribus.getDocName()
     sla_template_path = Path(sla_template_filename)
 
-    if 'file' in CONFIGURATION['data']:
+    if 'file' in CONFIGURATION['data'] and CONFIGURATION['data']['file']:
         data_path = str(sla_template_path.parent.joinpath(CONFIGURATION['data']['file']))
     elif CONFIGURATION['data']['format'] == 'json':
         data_path = sla_template_path.with_suffix('.json')
@@ -210,6 +202,6 @@ def main():
         for page in original_pages:
             scribus.deletePage(page)
 
-
-CONFIGURATION = get_configuration(scribus.getDocName())
-main()
+if __name__ == "__main__":
+    CONFIGURATION = get_configuration(scribus.getDocName())
+    main()
