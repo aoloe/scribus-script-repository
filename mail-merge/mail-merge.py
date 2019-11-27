@@ -50,7 +50,7 @@ def merge_configuration(default, local):
             default[key] = local[key]
 
 def get_configuration(scribus_doc):
-    """ return the project configuration merged with the default ones"""
+    """ return the project configuration merged with the default one"""
     configuration = CONFIGURATION_DEFAULT
     path = Path(scribus_doc)
     config_filename = path.with_suffix('.conf.json')
@@ -62,7 +62,8 @@ def get_configuration(scribus_doc):
     return configuration
 
 def duplicate_content(pages, named_items):
-    """ duplicate the content of pages at the end of the document and track the new item names for the items in named_items
+    """ duplicate the content of pages at the end of the document
+        and track the new item names for the items in named_items
     return the list of created item names from named_items """
     result = {}
     page_n = scribus.pageCount()
@@ -190,8 +191,7 @@ def main():
             scribus.revertDoc()
         scribus.setRedraw(True)
     elif CONFIGURATION['output']['single-sla']:
-        page_n = scribus.pageCount()
-        original_pages = list(range(1, page_n + 1))
+        original_pages = list(range(1, scribus.pageCount() + 1))
         for row in reader:
             new_frames = duplicate_content(original_pages, [i[0] for i in text_frames + image_frames])
 
