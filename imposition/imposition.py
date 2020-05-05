@@ -1,11 +1,11 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 # usage:
-# scribus -g -py scribus-to-pdf.py -- filename.sla
+# scribus -g -py imposition.py -- filename.sla
 # Creates a pdf at the original size and one imposed on A4.
 # 
 # or
 #
-# python scribus-to-pdf.py [filename.sla]
+# python imposition.py [filename.sla]
 # Call this script through scribus for each file in the directory or for the given Scribus file
 #
 # TODO:
@@ -76,7 +76,7 @@ def main():
         pdf.save()
 
         # os.system("pdfnup --nup 2x2 --frame false --no-landscape " + filename + "-reordered.pdf --outfile " + filename.replace("a6", "a4") + ".pdf")
-        call(['pdfnup', '--nup', '2x2', '--frame', 'false', '--no-landscape', filename + '-reordered.pdf', '--outfile', filename + "-a4.pdf"])
+        call(['pdfjam', '--nup', '2x2', '--frame', 'false', '--no-landscape', filename + '-reordered.pdf', '--outfile', filename + "-a4.pdf"])
         os.remove(pdf.file)
     else:
         print("No file open");
