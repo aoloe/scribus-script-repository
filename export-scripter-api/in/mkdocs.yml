@@ -1,0 +1,6 @@
+site_name: Scribus Scripter API
+theme: readthedocs
+markdown_extensions:
+- nl2br
+nav:
+- index.md

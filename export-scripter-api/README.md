@@ -1,0 +1,56 @@
+# Export the API documentation
+
+Exports the list of all commands to a set of Markdown files.
+
+## Requirements
+
+- This scripts runs from inside Scribus
+- It needs a Scribus 1.5.6svn newer than mid August 2020 (and `__file__` being correctly set)
+
+## Exporting with mkdocs
+
+mkdocs can use the Markdown files to create a directory of static HTML files:
+
+- The script creates a config file for mkdocs.
+- in the `out/` directory, run `mkdocs build && cp ../in/README.md site/`
+- View or upload your files.
+- The result can be seen here: <http://impagina.org/scribus-scripter-api/>
+
+## Implementation details
+
+### The configuration file
+
+The behavior of the script is configured with the file `export-api.json` next to the script itself.
+
+- `files`: List of files that should be copied to the `out/` directory.
+- `output`: List of sections with their titles, in the order used in the table of contents.
+- `source`: List of sections with the functions, variables constants and classes to be included.
+
+  The items can be assigned to a section through:
+
+  - regular expressions,
+  - explicit listing.
+
+  For each section, functions will first be checked by list and thenby regular expresion.  
+  Each set of constants can only be defined by list _or_ by regular expressions.  
+  The order of the entries relates to the order of the regular expressions (as an example `masterpage` is defined before `page`).
+
+## Todo
+
+- improve the `scribus.__doc__` text
+- add the default values to the class members (most of all PDFExport)
+- some function might be useful in multiple places. as an example, "getCustomLineStyle" and "setCustomLineStyle" are captured by "other styles" but might also need to be referenced in "Lines"
+- evaluate <https://github.com/egoist/docute> to create a vue.js site with on the fly reading of md files.
+  - it should have some search functionalities (<https://docute.org/plugin-api#apienablesearchoptions>)
+- improve the signature of the functions in the code by using the typing and explicit default values
+  - `setInfo(author: str, info: str, description:str) -> bool
+  - `getAllObjects(page: int = None) -> list
+
+## Notes
+
+- It seems to be impossible to get the signature of function defined in Cython. we will need to parse the first line of the docstring
+- Search:
+  - [MiniSearch, a client-side full-text search engine](https://lucaongaro.eu/blog/2019/01/30/minisearch-client-side-fulltext-search-engine.html)
+  - <https://github.com/bvaughn/js-search>
+  - <https://www.oreilly.com/library/view/javascript-application-cookbook/1565925777/ch01.html>
+  - <https://lunrjs.com/>

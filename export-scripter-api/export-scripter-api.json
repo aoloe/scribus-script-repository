@@ -1,0 +1,463 @@
+{
+    "files": {
+        "in/README.md": "README.md",
+        "in/LICENSE": "LICENSE"
+    },
+    "output":{
+        "document": "Document",
+        "masterpage": "Master pages",
+        "layer": "Layers",
+        "page": "Pages",
+        "text-style": "Text styles",
+        "other-style": "Other styles",
+        "selection": "Selection",
+        "frame-properties": "Frame properties",
+        "text-frame": "Text frames",
+        "image-frame": "Image frames",
+        "item": "Item",
+        "line": "Lines",
+        "shape": "Shapes",
+        "table": "Tables",
+        "vector-images": "Vector images",
+        "image-export": "View",
+        "color": "Colors",
+        "font": "Fonts",
+        "pdf-forms": "PDF forms",
+        "pdf-export": "PDF export",
+        "print": "Printing",
+        "view": "View",
+        "dialog": "Dialogs",
+        "exceptions": "Exceptions",
+        "deprecated": "Deprecated"
+    },
+    "sources": {
+        "deprecated": {
+            "functions": {
+                "list": [
+                    "getStyle",
+                    "setStyle",
+                    "getAllStyles",
+                    "newDoc",
+                    "pageDimension"
+                ]
+            },
+            "constants": [
+                {
+                    "doc": "Document folds",
+                    "regex": [
+                        "^PAGE_.*"
+                    ]
+                }
+            ]
+        },
+        "view": {
+            "functions": {
+                "list": [
+                    "scrollDocument",
+                    "setCursor",
+                    "zoomDocument"
+                ]
+            }
+        },
+        "dialog": {
+            "functions": {
+                "regex": [
+                    ".*Dialog$",
+                    "^progress.*"
+                ],
+                "list": [
+                    "fileQuit",
+                    "getGuiLanguage",
+                    "messagebarText",
+                    "messageBox",
+                    "statusMessage"
+                ]
+            },
+            "constants": [
+                {
+                    "doc": "Dialog buttons",
+                    "regex": [
+                        "^BUTTON_.*"
+                    ]
+                },
+                {
+                    "doc": "Dialog icons",
+                    "regex": [
+                        "^ICON_.*"
+                    ]
+                }
+            ]
+
+        },
+        "document": {
+            "functions": {
+                "regex": [
+                    ".+Doc$",
+                    "^.{3}Unit$",
+                    "^.{3,4}Doc.*"
+                ],
+                "list": [
+                    "docChanged",
+                    "setInfo",
+                    "setMargins",
+                    "redrawAll",
+                    "setBleeds",
+                    "setBaseLine",
+                    "setRedraw"
+            ]
+            },
+            "constants": [
+                {
+                    "doc": "Measurement units",
+                    "regex": [
+                        "^UNIT_.*"
+                    ]
+                },
+                {
+                    "doc": "Document layout",
+                    "list": [
+                        "NOFACINGPAGES",
+                        "FACINGPAGES",
+                        "FIRSTPAGERIGHT",
+                        "FIRSTPAGELEFT"
+                    ]
+                }
+            ]
+
+        },
+        "font": {
+            "functions": {
+                "list": [
+                    "getFontNames",
+                    "getXFontNames",
+                    "renderFont"
+                ]
+            }
+        },
+        "image-export": {
+            "functions": {
+                "list": [
+                    "savePageAsEPS"
+                ]
+            },
+            "classes": {
+                "list": [
+                    "ImageExport"
+                ]
+            }
+        },
+        "masterpage": {
+            "functions": {
+                "regex": [
+                    ".*[mM]aster[pP]age.*"
+                ]
+            }
+        },
+        "layer": {
+            "functions": {
+                "regex": [
+                    ".*Layer.*"
+                ]
+            },
+            "constants": [
+                {
+                    "doc": "Layer modes",
+                    "list": [
+                        "NORMAL",
+                        "DARKEN",
+                        "LIGHTEN",
+                        "MULTIPLY",
+                        "SCREEN",
+                        "OVERLAY",
+                        "HARD_LIGHT",
+                        "SOFT_LIGHT",
+                        "DIFFERENCE",
+                        "EXCLUSION",
+                        "COLOR_DODGE",
+                        "COLOR_BURN",
+                        "HUE",
+                        "SATURATION",
+                        "COLOR",
+                        "LUMINOSITY"
+                    ]
+                }
+            ]
+
+        },
+        "page": {
+            "functions": {
+                "regex": [
+                    ".*Page$",
+                    ".{3}Page.*",
+                    ".*Guides$"
+                ],
+                "list": [
+                    "getAllObjects",
+                    "pageCount"
+                ]
+            },
+            "constants": [
+                {
+                    "doc": "Page sizes",
+                    "regex": [
+                        "^PAPER_.*"
+                    ]
+                },
+                {
+                    "doc": "Page orientation",
+                    "list": [
+                        "PORTRAIT",
+                        "LANDSCAPE"
+                    ]
+                }
+            ]
+        },
+        "selection": {
+            "functions": {
+                "list": [
+                    "deselectAll",
+                    "getSelectedObject",
+                    "moveSelectionToBack",
+                    "moveSelectionToFront",
+                    "selectionCount",
+                    "selectObject"
+                ]
+            }
+        },
+        "text-style": {
+            "functions": {
+                "list": [
+                    "loadStylesFromFile"
+                ],
+                "regex": [
+                    ".*ParagraphStyles?.*",
+                    ".*Char.*Styles?.*"
+                ]
+            }
+        },
+        "other-style": {
+            "functions": {
+                "regex": [
+                    ".*Styles?.*"
+                ]
+            }
+        },
+        "vector-images": {
+            "functions": {
+                "regex": [
+                    "^place.*"
+                ]
+            }
+        },
+        "image-frame": {
+            "functions": {
+                "regex": [
+                    ".*Image.*"
+                ]
+            },
+            "constants": [
+                {
+                    "doc": "Image's color space",
+                    "regex": [
+                        "^CSPACE_.*"
+                    ]
+                }
+            ]
+        },
+        "text-frame": {
+            "functions": {
+                "regex": [
+                    ".*Text.*",
+                    ".{3}Column.*",
+                    ".{3}Font.*"
+                ],
+                "list": [
+                    "textOverflows",
+                    "getLineSpacing",
+                    "isPDFBookmark",
+                    "setLineSpacing",
+                    "setLineSpacingMode",
+                    "setPDFBookmark"
+                ]
+            },
+            "constants": [
+                {
+                    "doc": "Text paragraph alignment",
+                    "regex": [
+                        "^ALIGN_.*"
+                    ]
+                },
+                {
+                    "doc": "Tabs modes",
+                    "regex": [
+                        "^TAB_.*"
+                    ]
+                },
+                {
+                    "doc": "LTR and RTL directions",
+                    "regex": [
+                        "^DIRECTION_.*"
+                    ]
+                },
+                {
+                    "doc": "Text frame vertical alignment",
+                    "regex": [
+                        "^ALIGNV_.*"
+                    ]
+                }
+            ]
+        },
+        "table": {
+            "functions": {
+                "regex": [
+                    ".*Cell.*",
+                    ".*Table.*"
+                ]
+            }
+        },
+        "shape": {
+            "functions": {
+                "list": [
+                    "combinePolygons",
+                    "createEllipse",
+                    "createPolygon",
+                    "createRect"
+                ]
+            }
+        },
+        "line": {
+            "functions": {
+                "comments": [
+                    "Setting the line properties is documented in the frame properties"
+                ],
+                "regex": [
+                    "^create.*Line$"
+                ]
+            }
+        },
+        "frame-properties": {
+            "functions": {
+                "regex": [
+                    ".{3}Corner.*",
+                    ".{3}Fill.*",
+                    ".{3}Gradient.*",
+                    ".{3}Line.*",
+                    ".{3}Object.*"
+                ],
+                "list": [
+                    "flipObject",
+                    "getPosition",
+                    "getRotation",
+                    "getSize",
+                    "getTextFlowMode",
+                    "setItemName",
+                    "setMultiLine",
+                    "setTextFlowMode",
+                    "isLocked",
+                    "lockObject",
+                    "moveObject",
+                    "moveObjectAbs",
+                    "rotateObject",
+                    "rotateObjectAbs",
+                    "sizeObject",
+                    "textFlowMode"
+                ]
+            },
+            "constants": [
+                {
+                    "doc": "Lines and stroke properties",
+                    "regex": [
+                        "^LINE_.*",
+                        "^JOIN_.*",
+                        "^CAP_.*"
+                    ]
+                },
+                {
+                    "doc": "Fill modes",
+                    "regex": [
+                        "^FILL_.*"
+                    ]
+                }
+            ]
+        },
+        "item": {
+            "functions": {
+                "list": [
+                    "copyObject",
+                    "deleteObject",
+                    "duplicateObject",
+                    "groupObjects",
+                    "objectExists",
+                    "pasteObject",
+                    "scaleGroup",
+                    "setNewName",
+                    "unGroupObject",
+                    "unGroupObjects",
+                    "getProperty",
+                    "getPropertyCType",
+                    "getPropertyNames",
+                    "setProperty"
+                ]
+            }
+        },
+        "color": {
+            "functions": {
+                "regex": [
+                    "(change|define|get|set)Color.*"
+                ],
+                "list": [
+                    "replaceColor",
+                    "deleteColor",
+                    "setSpotColor",
+                    "isSpotColor"
+                ]
+            }
+        },
+        "pdf-forms": {
+            "functions": {
+                "list": [
+                    "createPdfAnnotation",
+                    "getJSActionScript",
+                    "setJSActionScript",
+                    "setLinkAnnotation",
+                    "setURIAnnotation",
+                    "isAnnotated",
+                    "setFileAnnotation"
+                ]
+            }
+        },
+        "pdf-export": {
+            "functions": {
+                "list": [
+                    "readPDFOptions",
+                    "savePDFOptions"
+                ]
+            },
+            "classes": {
+                "list": [
+                    "PDFfile"
+                ]
+            }
+        },
+        "print": {
+            "classes": {
+                "list": [
+                    "Printer"
+                ]
+            }
+        },
+        "exceptions": {
+            "classes": {
+                "list": [
+                    "NameExistsError",
+                    "NoDocOpenError",
+                    "NoValidObjectError",
+                    "NotFoundError",
+                    "ScribusException",
+                    "WrongFrameTypeError"
+                ]
+            }
+        }
+    }
+}
+
