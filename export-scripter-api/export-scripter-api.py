@@ -169,8 +169,6 @@ def function_doc_to_md(doc):
 
 def main():
 
-    sys.stdout = open("api.txt", "w")
-
     SCRIPT_PATH = Path(__file__).parent
 
     CONFIG_FILE = SCRIPT_PATH.joinpath('export-scripter-api.json')
@@ -178,6 +176,8 @@ def main():
     INPUT_PATH = SCRIPT_PATH.joinpath('in/')
     CONTENT_PATH = 'docs/'
     OUTPUT_DOCS_PATH = OUTPUT_PATH.joinpath(CONTENT_PATH)
+
+    # sys.stdout = open(SCRIPT_PATH.joinpath('output.txt'), 'w')
 
     if not os.path.exists(OUTPUT_PATH):
         os.mkdir(OUTPUT_PATH)
@@ -254,7 +254,6 @@ def main():
                 content += f'### {member}\n\n{doc}\n\n'
 
         if api_doc.sections[section_id]['classes']:
-            print(api_doc.sections[section_id]['classes'])
             for cl in sorted(api_doc.sections[section_id]['classes'], key=lambda x: x['name']):
                 content += f'## class {cl["name"]}\n\n'
                 if cl['doc']:
