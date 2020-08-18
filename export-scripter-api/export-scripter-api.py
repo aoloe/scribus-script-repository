@@ -278,7 +278,7 @@ def main():
         for i, o in sections['files'].items():
             shutil.copyfile(SCRIPT_PATH.joinpath(i), OUTPUT_DOCS_PATH.joinpath(o))
     with open(OUTPUT_DOCS_PATH.joinpath('index.md'), 'w') as f:
-        f.write('# ' + scribus.__doc__ + f"\n\nThis API documentation has been generated from a Scribus development version ({datetime.datetime.now():%Y-%m-%d}).")
+        f.write('# ' + scribus.__doc__ + f"\n\nThis API documentation has been generated from Scribus {scribus.scribus_version} ({datetime.datetime.now():%Y-%m-%d}).")
 
     for f, d in api_doc.scribus_doc.functions.items():
         # print(f)
