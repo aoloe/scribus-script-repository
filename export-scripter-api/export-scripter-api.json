@@ -19,12 +19,12 @@
         "shape": "Shapes",
         "table": "Tables",
         "vector-images": "Vector images",
-        "image-export": "View",
         "color": "Colors",
         "font": "Fonts",
         "pdf-forms": "PDF forms",
         "pdf-export": "PDF export",
         "print": "Printing",
+        "image-export": "Export to bitmap",
         "view": "View",
         "dialog": "Dialogs",
         "exceptions": "Exceptions",
@@ -38,7 +38,8 @@
                     "setStyle",
                     "getAllStyles",
                     "newDoc",
-                    "pageDimension"
+                    "pageDimension",
+                    "unGroupObject"
                 ]
             },
             "constants": [
@@ -269,18 +270,25 @@
                 "regex": [
                     ".*Text.*",
                     ".{3}Column.*",
-                    ".{3}Font.*"
+                    ".{3}Font.*",
+                    ".{3}LineSpacing.*",
+                    ".*LinkedFrame$"
                 ],
                 "list": [
                     "textOverflows",
-                    "getLineSpacing",
+                    "getFirstLineOffset",
                     "isPDFBookmark",
-                    "setLineSpacing",
-                    "setLineSpacingMode",
+                    "setFirstLineOffset",
                     "setPDFBookmark"
                 ]
             },
             "constants": [
+                {
+                    "doc": "Text frame first line offset mode",
+                    "regex": [
+                        "^FLOP_.*"
+                    ]
+                },
                 {
                     "doc": "Text paragraph alignment",
                     "regex": [
@@ -391,7 +399,6 @@
                     "pasteObject",
                     "scaleGroup",
                     "setNewName",
-                    "unGroupObject",
                     "unGroupObjects",
                     "getProperty",
                     "getPropertyCType",
@@ -444,7 +451,15 @@
                 "list": [
                     "Printer"
                 ]
-            }
+            },
+            "constants": [
+                {
+                    "doc": "Printer language",
+                    "regex": [
+                        "^PRNLANG_.*"
+                    ]
+                }
+            ]
         },
         "exceptions": {
             "classes": {
