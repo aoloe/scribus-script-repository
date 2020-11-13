@@ -188,16 +188,23 @@ def main():
         filename=OUTPUT_PATH.joinpath('logs.txt'),
         level=logging.DEBUG, filemode='w')
 
+    with open(CONFIG_FILE, 'r') as f:
+        config = json.load(f)
+
+    # allow to create alias of commands
+    # (currently, used for getting some variable being detected as constants)
+    if 'mock' in config:
+        for key, value in config['mock'].items():
+            if hasattr(scribus, value) and not hasattr(scribus, key):
+                setattr(scribus, key, getattr(scribus, value))
+
     # read all the available commands
     scribus_doc = get_inspection(scribus)
 
     # categorize the commands into sections
-    with open(CONFIG_FILE, 'r') as f:
-        sections = json.load(f)
-
     api_doc = DocApi(scribus_doc)
 
-    for section_id, section in sections['sources'].items():
+    for section_id, section in config['sources'].items():
         if 'functions' in section:
             if 'list' in section['functions']:
                 for command in section['functions']['list']:
@@ -213,7 +220,7 @@ def main():
                 elif 'regex' in constants:
                     api_doc.add_constants_by_regex(section_id, constants['regex'], constants['doc'])
     # for functions we need a second pass for regexes
-    for section_id, section in sections['sources'].items():
+    for section_id, section in config['sources'].items():
         if 'functions' in section:
             if 'regex' in section['functions']:
                 api_doc.add_function_by_regex(section_id, section['functions']['regex'])
@@ -225,7 +232,7 @@ def main():
     content_toc = '# Scribus Scripter API\n\n'
     with open(INPUT_PATH.joinpath('mkdocs.yml'), 'r') as f:
         content_mkdocs = f.read()
-    for section_id, title in sections['output'].items():
+    for section_id, title in config['output'].items():
         if section_id not in api_doc.sections:
             logging.warning('%s is not a target', section_id)
             continue
@@ -274,8 +281,8 @@ def main():
         f.write(content_toc)
     with open(OUTPUT_PATH.joinpath('mkdocs.yml'), 'w') as f:
         f.write(content_mkdocs)
-    if 'files' in sections:
-        for i, o in sections['files'].items():
+    if 'files' in config:
+        for i, o in config['files'].items():
             shutil.copyfile(SCRIPT_PATH.joinpath(i), OUTPUT_DOCS_PATH.joinpath(o))
     with open(OUTPUT_DOCS_PATH.joinpath('index.md'), 'w') as f:
         f.write('# ' + scribus.__doc__ + f"\n\nThis API documentation has been generated from Scribus {scribus.scribus_version} ({datetime.datetime.now():%Y-%m-%d}).")

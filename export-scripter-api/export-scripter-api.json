@@ -3,7 +3,12 @@
         "in/README.md": "README.md",
         "in/LICENSE": "LICENSE"
     },
+    "mock" : {
+        "SCRIBUS_VERSION" : "scribus_version",
+        "SCRIBUS_VERSION_INFO" : "scribus_version_info"
+    },
     "output":{
+        "scribus": "Scribus",
         "document": "Document",
         "masterpage": "Master pages",
         "layer": "Layers",
@@ -47,6 +52,17 @@
                     "doc": "Document folds",
                     "regex": [
                         "^PAGE_.*"
+                    ]
+                }
+            ]
+        },
+        "scribus": {
+            "constants": [
+                {
+                    "doc": "Scribus versions (they might be lowercase...)",
+                    "list": [
+                        "SCRIBUS_VERSION",
+                        "SCRIBUS_VERSION_INFO"
                     ]
                 }
             ]
@@ -392,11 +408,14 @@
             "functions": {
                 "list": [
                     "copyObject",
+                    "copyObjects",
                     "deleteObject",
                     "duplicateObject",
+                    "duplicateObjects",
                     "groupObjects",
                     "objectExists",
                     "pasteObject",
+                    "pasteObjects",
                     "scaleGroup",
                     "setNewName",
                     "unGroupObjects",
@@ -405,7 +424,15 @@
                     "getPropertyNames",
                     "setProperty"
                 ]
-            }
+            },
+            "constants": [
+                {
+                    "doc": "Item types",
+                    "regex": [
+                        "^ITEMTYPE_.*"
+                    ]
+                }
+            ]
         },
         "color": {
             "functions": {
