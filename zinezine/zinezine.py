@@ -3,7 +3,6 @@
 
 import sys, os
 from PyPDF2 import PdfFileReader, PdfFileWriter, PageObject
-#import papersize
 
 try:
     import scribus as s
@@ -17,7 +16,6 @@ def makeZine(nome_pdf):
     pdf = PdfFileReader(nome_pdf)
     outputPDF = os.path.splitext(nome_pdf)[0]+"-zine.pdf"
 
-    #target_size = papersize.parse_papersize("a3")
     target_size = (pdf.getPage(0).mediabox.getHeight()*2, pdf.getPage(0).mediabox.getWidth()*4)
     newPage = PageObject.create_blank_page(None, target_size[1], target_size[0])
 
