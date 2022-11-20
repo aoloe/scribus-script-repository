@@ -5,6 +5,8 @@ from pygments.util import ClassNotFound as pygments_classNotFound
 try: 
     import scribus
 except ImportError: 
+    # if you want to use the mock instead of Scribus, copy in here the mockAPI from
+    # the script repository
     import mockAPI
     scribus = mockAPI.Scribus()
 

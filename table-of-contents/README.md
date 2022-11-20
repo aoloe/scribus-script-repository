@@ -8,6 +8,60 @@ You're welcome to suggest a (minimal?) UI and further featurees for this script.
 
 ## Notes
 
+## Adding the table of contents to the pdf
+
+### pdftk
+
+```sh
+pdftk your-file.pdf update_info "$bookmarks_file" output "$tmp_dir/$f"
+```
+
+
+
+<https://www.youtube.com/watch?v=5dv_02v0zzc>
+
+```sh
+pdftk your-file.pdf dump_data > metadata.txt
+```
+
+In the resulting `metadata.txt, in between
+
+```
+NumberOfPages: 8
+PageMediaBegin
+```
+
+add one entry for Toc item:
+
+```
+BookmarkBegin
+BookmarkTitle:
+BookmarkLevel:
+BookmarkPageNumber:
+```
+
+The result will be something like:
+
+```
+NumberOfPages: 8
+BookmarkBegin
+BookmarkTitle: First title
+BookmarkLevel: 1
+BookmarkPageNumber: 2
+BookmarkBegin
+BookmarkTitle: Second title
+BookmarkLevel: 1
+BookmarkPageNumber: 2
+PageMediaBegin
+```
+
+Put the modified metadata into a copy of the pdf.
+
+```sh
+pdftk your-file.pdf update_info_utf8 metadata.txt output your-file-with-toc.pdf
+```
+
+
 ### `selectFrameText()`
 
 `selectText()` works on the whole frame chain. we need `selectFrameText()` to detect styles inside of specific text frames.
