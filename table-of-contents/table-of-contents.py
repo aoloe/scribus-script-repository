@@ -29,6 +29,8 @@ def add_attributes_for_heading_styles():
                 'RelationshipTo': '',
                 'AutoAddTo': 'none'
             }
+            # for now, stop after having detected the first style
+            break
         start += len(p) + 1
 
     if toc_attribute != None:
