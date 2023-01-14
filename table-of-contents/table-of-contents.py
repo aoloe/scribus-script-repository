@@ -46,7 +46,6 @@ def main():
         scribus.gotoPage(page)
         for item in scribus.getPageItems():
             if item[1] == 4:
-                # TODO: why do i need to deselect before deselecting?
                 scribus.deselectAll()
                 scribus.selectObject(item[0])
                 add_attributes_for_heading_styles()
