@@ -13,6 +13,10 @@ class Scribus:
 
     def haveDoc(self) :
         return True
+    def openDoc(self, name) :
+        pass
+    def closeDoc(self) :
+        pass
     def messageBox(self, title, description,  icon, button1 = 0, button2 = 0, button3 = 0) :
         return button1
     def valueDialog(self, title, description, default = '') :
@@ -65,6 +69,9 @@ class Scribus:
     def getSelectedObject(self, i):
         return self.selection[i]
 
+    def PDFfile(self):
+        return PDFfile()
+
     def mock_inject_items(self, items):
         self.selection = items
     def mock_inject_selection(self, items):
@@ -78,3 +85,8 @@ class MockPageItem:
         self.w = w
         self.h = h
         self.name = name
+
+class PDFfile:
+    file = ''
+    def save(self):
+        pass
