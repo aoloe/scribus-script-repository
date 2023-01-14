@@ -1,8 +1,7 @@
 # go through all text items in the document, check for heading styles and create matching attributes for the table of contents
 #
 # © mit, ale rimoldi, 2023
-#
-#
+
 import scribus
 
 headings = ['h1', 'h2', 'h3']
