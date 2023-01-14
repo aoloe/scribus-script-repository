@@ -40,8 +40,6 @@ def main():
     if not scribus.haveDoc():
         return
 
-    scribus.deselectAll()
-
     for page in range(1, scribus.pageCount() + 1):
         scribus.gotoPage(page)
         for item in scribus.getPageItems():
