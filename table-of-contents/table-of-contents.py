@@ -14,13 +14,13 @@ def add_attributes_for_heading_styles():
     paragraphs = scribus.getFrameText().split('\r')
     # print(paragraphs)
 
-    toc_attribute = None
+    toc_attributes = []
     start = 0
     for p in paragraphs:
         scribus.selectText(start, len(p))
         p_style = scribus.getParagraphStyle()
         if p_style in headings:
-            toc_attribute = {
+            toc_attributes.append({
                 'Name': attribute_name,
                 'Type': 'none',
                 'Value': scribus.getFrameText(),
@@ -28,15 +28,12 @@ def add_attributes_for_heading_styles():
                 'Relationship': 'none',
                 'RelationshipTo': '',
                 'AutoAddTo': 'none'
-            }
-            # for now, stop after having detected the first style
-            break
+            })
         start += len(p) + 1
 
-    if toc_attribute != None:
+    if toc_attributes:
         attributes = [a for a in scribus.getObjectAttributes() if a['Name'] != attribute_name]
-        attributes.append(toc_attribute)
-        scribus.setObjectAttributes(attributes)
+        scribus.setObjectAttributes(attributes + toc_attributes)
 
 def main():
     if not scribus.haveDoc():
