@@ -1,11 +1,6 @@
 # Table of contents
 
-Generate the attributes for the table of contents by looking at the styles used in the document.
-
-At the time of writing, Scribus can only create single level table of contents.  
-[Multilevel Table of Content support](https://bugs.scribus.net/view.php?id=16887) contains a patch for producing multilevel table of contents: you probably need to really
-
-The first version of this script, only recognizes one single heading per frame.
+Generate the table of contents in the current frame by looking at the styles used in the document.
 
 ## The paragraph styles
 
