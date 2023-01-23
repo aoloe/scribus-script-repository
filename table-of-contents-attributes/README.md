@@ -21,36 +21,23 @@ toc_styles = ['toc1', 'toc2', 'toc3']
 
 If you want to track style of different names (or add more styles), simply modify the _styles_ variables.
 
-## Sections and page numbering
-
-In Scribus you can define sections and
-
-- define the starting page number
-- format the page number with different schemas (roman, letters, ...)
-
-Since it's not possible yet to read the section setting from the scripter API, the script define a `sections` global variable where you can add the sections you have defined:
-
-```py
-sections = [
-    {
-        'end': 0, # last page index in this section (0 = to the end)
-        'format': '1', # one of '1', 'i', 'I', 'a', 'A' # TODO: scribus has more possible formats
-        'start_number': 1,
-    },
-]
-```
 
 ## Initialize the table of contents
 
-- Create the styles for the heading and the table of contents.
-- Create your content, using "h1", "h2", and "h3" styles for the headings.
-- Create a text frame where you want the table of contents to appear.
+- Create a text frame with the name "Table of Contents" (using the properties palette).
+- Create the paragraph styles "h1", "h2", "h3" (or the styles with the names you are using in `headings`.
+- In the "Document Item Attributes" section of the "Document Setup", create an attribute with the following values
 
-## Filling the table of contents
+  - "Name": "Table of Contents"
+  - "Type": String
 
-- Select the table of contents text frame 
+- In the "Table of Contents" section of "Document Setup", add a table of contents with the following values
+  - Item Attribute: choose the "Table of Contents" attribute you have created above.
+  - Destination Frame: choose the frame called "Table of Contents"
+  - Paragraph Style: choose the TOC style you want to see applied in the table of contents.
+
+## Updating the table of contents
+
+- Create your content, using "h1", "h2", and "h3" styles for the headings. (Take care to put only one heading in each frame.)
 - Run the `table-of-contents.py` script.
-
-## Future development
-
-- Read the sections from Scribus
+- Run _Extras > Generate Table of Contents_

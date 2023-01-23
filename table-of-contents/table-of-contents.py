@@ -57,14 +57,19 @@ def int_to_alpha(num):
 
 def get_formatted_page_number(page, section):
     page_number = section['start_number'] + page - 1
-    match section['format']:
-        case 'i':
+    # TODO: wait for match being available in the python distribute with scribus (3.10)
+    # match section['format']:
+    #"""     case 'i':
+    if section['format'] == 'i':
             page_number = int_to_roman(page_number).lower()
-        case 'I':
+    #     case 'I':
+    elif section['format'] == 'I':
             page_number = int_to_roman(page_number)
-        case 'a':
+    #     case 'a':
+    elif section['format'] == 'a':
             page_number = int_to_alpha(page_number)
-        case 'A':
+    #     case 'A':
+    elif section['format'] == 'A':
             page_number = int_to_alpha(page_number).to_upper()
     return page_number
 
