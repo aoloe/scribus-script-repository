@@ -81,7 +81,7 @@ def get_frame_headings_by_style(page_number):
 
     start = 0
     for p in paragraphs:
-        scribus.selectText(start, len(p))
+        scribus.selectFrameText(start, len(p))
         p_style = scribus.getParagraphStyle()
         if p_style == None:
             start += len(p) + 1
@@ -116,7 +116,7 @@ def main():
         page_number = get_formatted_page_number(page, section)
         scribus.gotoPage(page)
         for item in scribus.getPageItems():
-            if item[1] == 4:
+            if item[1] == 4 or item[1] == 5:
                 scribus.deselectAll()
                 scribus.selectObject(item[0])
                 headings += get_frame_headings_by_style(page_number)
