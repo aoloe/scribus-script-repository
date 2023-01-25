@@ -115,11 +115,15 @@ def main():
         section = get_current_section(sections, page)
         page_number = get_formatted_page_number(page, section)
         scribus.gotoPage(page)
-        for item in scribus.getPageItems():
-            if item[1] == 4 or item[1] == 5:
-                scribus.deselectAll()
-                scribus.selectObject(item[0])
-                headings += get_frame_headings_by_style(page_number)
+        # get the text and linked frames, sorted by the position on the page
+        page_text_frames = [(item[0], scribus.getPosition(item[0])) for item in scribus.getPageItems()
+            if item[1] == 4 or item[1] == 5]
+        page_text_frames.sort(key= lambda item: (item[1][1], item[1][0]))
+
+        for item, _ in page_text_frames:
+            scribus.deselectAll()
+            scribus.selectObject(item)
+            headings += get_frame_headings_by_style(page_number)
     scribus.deselectAll()
     scribus.setRedraw(True)
 
