@@ -48,6 +48,14 @@ sections = [
 - Select the table of contents text frame
 - Run the `table-of-contents.py` script.
 
+## Setting the heading and toc styles from the attributes
+
+By adding the attributes `heading_styles` or `toc_styles` you can define custom styles to be used.  
+Not only you can customize the name of the styles, but you can create multiple table of contents, by tracking different toc styles.
+
+- In _File > Document Setup > Document Item Attributes_ create the attributes `heading_styles_ and / or `toc_styles`, using the type string.
+- Select the frame where you want the table of contents and use the context menu to add the `heading_styles_ and / or `toc_styles` attribute, setting the value to a comma separated list with the name of the styles.
+
 ## Future development
 
 - Read the sections from Scribus
