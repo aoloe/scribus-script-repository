@@ -14,9 +14,11 @@ except ImportError:
         print('This script must be run from inside Scribus')
         sys.exit()
 
-# TODO: use the attribute TOC, with value h1 and parameter toc1, ... to define the styles for each toc frame
 heading_styles = ['h1', 'h2', 'h3']
 toc_styles = ['toc1', 'toc2', 'toc3']
+# you can use the item attributes to set the heading and toc styles
+heading_attribute = 'heading_styles'
+toc_attribute = 'toc_styles'
 # TODO:  as soon the API supports reading the sections, read the the values from the real sections
 sections = [
     {
@@ -97,6 +99,7 @@ def get_frame_headings_by_style(page_number):
     return headings
 
 def main():
+    global heading_styles, toc_styles
     if not scribus.haveDoc():
         return
 
@@ -107,6 +110,16 @@ def main():
         return
 
     toc_item = scribus.getSelectedObject()
+
+    # read the heading and toc styles from the toc frame attributes
+    for attribute in scribus.getObjectAttributes():
+        if attribute['Name'] == heading_attribute:
+            heading_styles = [style.strip() for style in attribute['Value'].split(',')]
+        elif attribute['Name'] == toc_attribute:
+            toc_styles = [style.strip() for style in attribute['Value'].split(',')]
+    # ensure that the styles exist
+    for style in set(heading_styles + toc_styles).difference(scribus.getParagraphStyles()):
+        scribus.createParagraphStyle(style)
 
     headings = []
 
