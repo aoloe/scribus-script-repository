@@ -144,10 +144,11 @@ def main():
     scribus.deleteText()
     start = 0
     for heading in headings:
+        if start > 0:
+            scribus.insertText('\r', -1)
         scribus.insertText(heading['title'] + '\t' + str(heading['page']), -1)
         scribus.selectText(start, len(heading['title']))
         scribus.setParagraphStyle(toc_styles[heading['level']])
-        scribus.insertText('\r', -1)
         start += len(heading['title']) + 1 + len(str(heading['page'])) + 1
     scribus.layoutText()
 
