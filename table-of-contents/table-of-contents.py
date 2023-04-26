@@ -130,7 +130,7 @@ def main():
         scribus.gotoPage(page)
         # get the text and linked frames, sorted by the position on the page
         page_text_frames = [(item[0], scribus.getPosition(item[0])) for item in scribus.getPageItems()
-            if item[1] == 4 or item[1] == 5]
+            if item[1] == 4]
         page_text_frames.sort(key= lambda item: (item[1][1], item[1][0]))
 
         for item, _ in page_text_frames:
