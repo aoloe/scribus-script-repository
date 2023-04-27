@@ -43,7 +43,7 @@ You need a Scribus which is newer than 2023-01-24 (1.5.9, 1.6, 1.7) for this scr
 ## Setting the heading and toc styles from the attributes
 
 By adding the attributes `heading_styles` or `toc_styles` you can define custom styles to be used.  
-Not only you can customize the name of the styles, but you can create multiple table of contents, by tracking different toc styles.
+Not only you can customize the name of the styles, but you can create multiple table of contents, by tracking different heading styles.
 
 - In _File > Document Setup > Document Item Attributes_ create the attributes `heading_styles` and / or `toc_styles`, using the type string.
 - Select the frame where you want the table of contents and use the context menu to add the `heading_styles` and / or `toc_styles` attribute, setting the value to a comma separated list with the name of the styles.
