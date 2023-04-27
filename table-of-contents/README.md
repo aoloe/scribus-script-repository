@@ -25,17 +25,9 @@ In Scribus you can define sections and
 - define the starting page number
 - format the page number with different schemas (roman, letters, ...)
 
-Since it's not possible yet to read the section setting from the scripter API, the script define a `sections` global variable where you can add the sections you have defined:
+You need a Scribus which is newer than 2023-01-24 (1.5.9, 1.6, 1.7) for this script to be able to read the section's page number settings (for older version, you will get sequential values starting from 1).
 
-```py
-sections = [
-    {
-        'end': 0, # last page index in this section (0 = to the end)
-        'format': '1', # one of '1', 'i', 'I', 'a', 'A' # TODO: scribus has more possible formats
-        'start_number': 1,
-    },
-]
-```
+[An older version of this script](https://github.com/aoloe/scribus-script-repository/tree/03c96173d8142c05437c11f09bf2ea759751de75/table-of-contents) has `sections` dictionary that let you define the sections and works with older versions of Scribus.
 
 ## Initialize the table of contents
 
@@ -55,7 +47,3 @@ Not only you can customize the name of the styles, but you can create multiple t
 
 - In _File > Document Setup > Document Item Attributes_ create the attributes `heading_styles_ and / or `toc_styles`, using the type string.
 - Select the frame where you want the table of contents and use the context menu to add the `heading_styles_ and / or `toc_styles` attribute, setting the value to a comma separated list with the name of the styles.
-
-## Future development
-
-- Read the sections from Scribus
