@@ -27,7 +27,7 @@ In Scribus you can define sections and
 
 You need a Scribus which is newer than 2023-01-24 (1.5.9, 1.6, 1.7) for this script to be able to read the section's page number settings (for older version, you will get sequential values starting from 1).
 
-[An older version of this script](https://github.com/aoloe/scribus-script-repository/tree/03c96173d8142c05437c11f09bf2ea759751de75/table-of-contents) has `sections` dictionary that let you define the sections and works with older versions of Scribus.
+[An older version of this script](https://github.com/aoloe/scribus-script-repository/tree/03c96173d8142c05437c11f09bf2ea759751de75/table-of-contents) has a `sections` variable that let you define the sections' settings and works with older versions of Scribus.
 
 ## Initialize the table of contents
 
