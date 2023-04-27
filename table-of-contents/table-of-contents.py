@@ -9,10 +9,8 @@ test = len(sys.argv) == 2 and sys.argv[1] == 'test'
 try:
     import scribus
 except ImportError:
-    # we only test functions that do not depend on scribus being loaded
-    if not test:
-        print('This script must be run from inside Scribus')
-        sys.exit()
+    print('This script must be run from inside Scribus')
+    sys.exit()
 
 heading_styles = ['h1', 'h2', 'h3']
 toc_styles = ['toc1', 'toc2', 'toc3']
