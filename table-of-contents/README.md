@@ -16,7 +16,7 @@ Also, by default, the script applies the styles "toc1", "toc2", and "toc3".
 toc_styles = ['toc1', 'toc2', 'toc3']
 ```
 
-If you want to track style of different names (or add more styles), simply modify the `headings` variable (or keep the script as is and read the section below about setting the attributes on the table of contents frame).
+If you want to track styles with different names (or add more styles), simply modify the `headings` and `toc_styles` variables (or keep the script as is and read the section below about setting the attributes on the table of contents frame).
 
 ## Sections and page numbering
 
