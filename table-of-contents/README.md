@@ -16,7 +16,7 @@ Also, by default, the script applies the styles "toc1", "toc2", and "toc3".
 toc_styles = ['toc1', 'toc2', 'toc3']
 ```
 
-If you want to track style of different names (or add more styles), simply modify the `headings` variable.
+If you want to track style of different names (or add more styles), simply modify the `headings` variable (or keep the script as is and read the section below about setting the attributes on the table of contents frame).
 
 ## Sections and page numbering
 
@@ -42,7 +42,8 @@ You need a Scribus which is newer than 2023-01-24 (1.5.9, 1.6, 1.7) for this scr
 
 ## Setting the heading and toc styles from the attributes
 
-By adding the attributes `heading_styles` or `toc_styles` you can define custom styles to be used.  
+By adding the attributes `heading_styles` or `toc_styles` to the table of contents frame, you can define custom styles to be used.  
+
 Not only you can customize the name of the styles, but you can create multiple table of contents, by tracking different heading styles.
 
 - In _File > Document Setup > Document Item Attributes_ create the attributes `heading_styles` and / or `toc_styles`, using the type string.
