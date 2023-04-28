@@ -27,10 +27,13 @@ for item in replacements:
         if start == -1:
             continue
         count = len(item[0])
+        # replace in the frame and try to keep the formattings
         scribus.selectText(start, count)
         scribus.deleteText()
         scribus.insertText(item[1], start)
+        # replace in the extracted content
         content = content[0:start] + item[1] + content[start + count:]
+        # prepare for the next find
         start += count
 
 scribus.layoutText()
