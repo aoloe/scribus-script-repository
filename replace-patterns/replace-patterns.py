@@ -6,13 +6,13 @@ import sys
 try:
     from scribus import *
 except ImportError:
-    print('Ce script est écrit en Python. Il ne peut être lancé que depuis Scribus.')
+    print('This script must be run from inside Scribus')
     sys.exit(1)
 
 if (not scribus.haveDoc() or
         scribus.selectionCount() != 1 or
         scribus.getObjectType() != "TextFrame"):
-    scribus.messageBox('Warning', 'Vous devez sélectionner un cadre de texte.')
+    scribus.messageBox('Warning', 'You need to select a text frame.')
     sys.exit(1)
 
 replacements = (
