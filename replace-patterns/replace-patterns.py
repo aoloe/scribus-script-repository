@@ -4,7 +4,7 @@
 
 import sys
 try:
-    from scribus import *
+    import scribus
 except ImportError:
     print('This script must be run from inside Scribus')
     sys.exit(1)
