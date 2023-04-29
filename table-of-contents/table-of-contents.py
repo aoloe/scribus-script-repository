@@ -4,8 +4,6 @@
 
 import sys
 
-test = len(sys.argv) == 2 and sys.argv[1] == 'test'
-
 try:
     import scribus
 except ImportError:
