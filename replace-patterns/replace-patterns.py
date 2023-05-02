@@ -34,7 +34,7 @@ for item in replacements:
         # replace in the extracted content
         content = content[0:start] + item[1] + content[start + count:]
         # prepare for the next find
-        start += count
+        start += len(item[1])
 
 scribus.layoutText()
 scribus.docChanged(True)
