@@ -1,6 +1,7 @@
 # replace fonts in the whole document
 #
 # © mit, ale rimoldi, 2023
+
 try:
     import scribus
 except ImportError:
