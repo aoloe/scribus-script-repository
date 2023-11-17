@@ -18,88 +18,92 @@ if not scribus.haveDoc():
 charsIgnore = ["-", "–", "­", " ", ".", ":", ";", ";", "?", "!", "\n", "'", "‘", "’", "," "\"", "“", "”", "\r"]
 
 button = scribus.messageBox('Confirmation', 'You should only scramble a copy of your document', scribus.ICON_WARNING, scribus.BUTTON_OK, scribus.BUTTON_CANCEL)
-print button
-if button == scribus.BUTTON_CANCEL :
+
+if button == scribus.BUTTON_CANCEL:
     sys.exit(2)
 
 selectedFrame = []
-textFrame = []
-imageFrame = []
+textFrames = []
+imageFrames = []
 if scribus.selectionCount() == 0:
-    for page in range(scribus.pageCount()) :
+    for page in range(scribus.pageCount()):
         scribus.gotoPage(page + 1)
         scribus.messagebarText("Processing Page "+str(page))
         scribus.redrawAll()
-        for item in scribus.getPageItems() :
+        for item in scribus.getPageItems():
             if (item[1] == 4):
-                textFrame.append(item[0])
-            elif (item[1] == 2) :
-                imageFrame.append(item[0])
-else :
-    for i in range(scribus.selectionCount()) :
+                textFrames.append(item[0])
+            elif (item[1] == 2):
+                imageFrames.append(item[0])
+else:
+    for i in range(scribus.selectionCount()):
         item = scribus.getSelectedObject(i)
         selectedFrame.append(item)
-        if scribus.getObjectType(item) == "TextFrame" :
-            textFrame.append(item)
-        if scribus.getObjectType(item) == "ImageFrame" :
-            imageFrame.append(item[0])
+        if scribus.getObjectType(item) == "TextFrame":
+            textFrames.append(item)
+        elif scribus.getObjectType(item) == "ImageFrame":
+            imageFrames.append(item)
 
-# print textFrame
-# print imageFrame
+# print(textFrames)
+# print(imageFrames)
 
 scribus.deselectAll()
 chars = []
-for item in textFrame :
+for item in textFrames:
     scribus.deselectAll()
     scribus.selectObject(item)
     n = scribus.getTextLength()
-    for i in range(n) :
+    for i in range(n):
         scribus.selectText(i, 1)
         char = scribus.getText()
-        if (char not in charsIgnore and len(char) > 0) :
+        if (char not in charsIgnore and len(char) > 0):
             chars.append(char.lower())
 
 random.shuffle(chars)
 
-for item in textFrame :
+for item in textFrames:
     scribus.messagebarText("Processing text frame "+item)
     scribus.redrawAll()
-    print item
+    # print(item)
     scribus.deselectAll()
     scribus.selectObject(item)
     n = scribus.getTextLength()
-    print n
-    for i in range(n) :
+    # print(n)
+    for i in range(n):
         scribus.selectText(i, 1)
         original = scribus.getText()
         if original not in charsIgnore and len(original) > 0:
             shuffled = chars.pop(0)
-            if original.isupper() :
+            if original.isupper():
                 shuffled = shuffled.upper()
             scribus.insertText(shuffled, i)
             scribus.selectText(i + 1, 1)
             scribus.deleteText()
 
-for item in imageFrame :
-    print item
+for item in imageFrames:
+    # print('image frame', item)
     scribus.messagebarText("Processing image frame "+item)
     scribus.redrawAll()
     imageFile = scribus.getImageFile(item)
+    if imageFile == '':
+        continue
     fileName, fileExtension = os.path.splitext(imageFile)
     imageFileBlurred = fileName+"_blurred"+fileExtension
     # TODO: instead of using image magick we should expos scribus' own blur to the scripter
-    if distutils.spawn.find_executable("convert") != "" :
+    if distutils.spawn.find_executable("convert") != "":
+        # print('img', imageFile)
         command = "identify "+imageFile
         result = os.popen(command).read();
-        if result != "" :
+        if result != "":
             size = max(result.split(" ")[2].split("x")) # extract max(width, height)
+            # print('size', size)
             command = "convert "+imageFile+" -blur 0x"+str(int(size)/50)+" "+imageFileBlurred
             # print  command
             os.system(command)
             scribus.loadImage(imageFileBlurred, item)
 
 scribus.deselectAll()
-for item in selectedFrame :
+for item in selectedFrame:
     scribus.selectObject(item)
  
 scribus.messagebarText("Finished, The text has been shuffled")

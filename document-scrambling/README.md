@@ -36,4 +36,4 @@ Don't forget to only run the script on a copy of your document! Otherwise, you r
 
 # Todo:
 
-- correctly handle emtpy image frames and inline images (if needed)
+- correctly handle inline images (if needed)
