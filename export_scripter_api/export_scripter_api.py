@@ -199,9 +199,6 @@ def run_script():
     api_doc = DocApi(scribus_doc)
 
     for section_id, section in config['sources'].items():
-        if section_id == 'document':
-            print('>>>>', section_id)
-            print('>>>>', api_doc.scribus_doc.others)
         if 'functions' in section:
             if 'list' in section['functions']:
                 for command in section['functions']['list']:

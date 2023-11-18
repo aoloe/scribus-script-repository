@@ -9,22 +9,24 @@ Exports the list of all Scripter commands and their docstrings to a set of Markd
 
 ## Usage
 
-You can run `export-scripter-api.py` from inside of Scribus or run `run-export-scripter-api.py` from a terminal (it will launch Scribus with `export-scripter-api.py`).
+### Getting the API documentation from Scribus
 
-This will create the scripter API documentation by reading the _docstrings_ defind in the Scribus source code.
-
-The markdown files are written into an `out` directory next to the script itself.
-
-The script also writes `out/mkdocs.yml`, a configuration file that can be used with `mkdocs` to generate Html files.
-
-Finally, `out/logs.txt` contains the list of the functions and constants that have not be processed by the rules defined in the `run-export-script-api.json` config.  
-You can use it to check that all commands are included in the documentation.
+- Run `export_scripter_api.py` from inside of Scribus or from a terminal (it will launch Scribus with itself as a parameter).
+- This will build the scripter API documentation by reading the _docstrings_ defined in the Scribus source code.
+- The markdown files are written into an `out/` directory next to the script itself.
+- The script also writes `out/mkdocs.yml`, a configuration file that can be used with `mkdocs` to generate Html files.
+- `out/logs.txt` contains the list of the functions and constants that have not be processed by the rules defined in the `run_export_script_api.json` config.  
+  You can use it to check that all commands are included in the documentation.
 
 ## Exporting with mkdocs
 
-`mkdocs` can use the Markdown files created by this script to create a directory of static HTML files:
+`mkdocs` uses the Markdown files created by the `export_scripter_api.py` script to create a directory of static HTML files:
 
-- The script creates a `out/mkdocs.yml` config file for mkdocs.
+- `mkdocs` needs to be installed (system wide or in a _venv_)
+- go into the `out/` directory
+- The script should have created  the `out/mkdocs.yml` config file for `mkdocs`.
+- If you have a copy of the repository with the static html files, symlink it into the `out/` with as `site/`:  
+  `ln -s ~/src/scribus-scripter-api-with-mkdocs/ site``
 - in the `out/` directory, run `mkdocs build && cp ../in/README.md site/`
 - View or upload your files.
 - The result can be seen here: <http://impagina.org/scribus-scripter-api/>
@@ -33,7 +35,7 @@ You can use it to check that all commands are included in the documentation.
 
 ### The configuration file
 
-The behavior of the script is configured with the file `export-api.json` next to the script itself.
+The behavior of the script is configured with the file `export_scripter_api.json` next to the script itself.
 
 - `files`: List of files that should be copied to the `out/` directory.
 - `output`: List of sections with their titles, in the order used in the table of contents.
@@ -50,7 +52,7 @@ The behavior of the script is configured with the file `export-api.json` next to
 
 ## Todo
 
-- [ ] Merge the two script and make it self calling if Scribus is not running.
+- [x] Merge the two script and make it self calling if Scribus is not running.
 - [ ] improve the `scribus.__doc__` text
 - [ ] add the default values to the class members (most of all PDFExport)
 - [ ] optionally import markdown files for single commands (by checking if a file by the same name as the command exists)
