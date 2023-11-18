@@ -1,16 +1,19 @@
-# encoding: utf-8
-# (c) MIT, ale rimoldi <ale@graphicslab.org>
+#!/usr/bin/env python3
+"""Export all Scribus Scripter API commands into a set of Markdown files.
 
-"""
-Export all Scribus Scripter API commands into a set of Markdown files.
 For more details see the README.md
+
+(c) MIT 2023, ale rimoldi <ale@graphicslab.org>
 """
+import subprocess
 
 import os
 import sys
 import inspect
 
 import logging
+
+from dataclasses import dataclass
 
 import copy
 import json
@@ -21,20 +24,15 @@ import shutil
 
 import datetime
 
-try:
-    import scribus
-except ImportError:
-    print('This script must be run from inside Scribus')
-
+@dataclass
 class DocModule:
-    """ Data class for collecting the inspected values """
-    def __init__(self, name, classes, functions, constants, members, others):
-        self.name = name
-        self.classes = classes
-        self.functions = functions
-        self.constants = constants
-        self.members = members
-        self.others = others
+    """Collecting the inspected values."""
+    name: str
+    classes: dict
+    functions: dict
+    constants: dict
+    members: dict
+    others: dict
 
 def get_inspection(item):
     """ Get the module's inspected data aggregated by type """
@@ -130,6 +128,9 @@ class DocApi:
             if constant in self.scribus_doc.constants:
                 constants_set['list'].append(constant)
                 del self.scribus_doc.constants[constant]
+            elif constant in self.scribus_doc.others: # m, mm, ...
+                constants_set['list'].append(constant)
+                del self.scribus_doc.others[constant]
             else:
                 logging.warning('%s is not a constant', constant)
         if not section_id in self.sections:
@@ -169,11 +170,11 @@ def function_doc_to_md(doc):
 
     return '\n'.join(lines)
 
-def main():
+def run_script():
 
     SCRIPT_PATH = Path(__file__).parent
 
-    CONFIG_FILE = SCRIPT_PATH.joinpath('export-scripter-api.json')
+    CONFIG_FILE = SCRIPT_PATH.joinpath('export_scripter_api.json')
     OUTPUT_PATH = SCRIPT_PATH.joinpath('out/')
     INPUT_PATH = SCRIPT_PATH.joinpath('in/')
     CONTENT_PATH = 'docs/'
@@ -191,13 +192,6 @@ def main():
     with open(CONFIG_FILE, 'r') as f:
         config = json.load(f)
 
-    # allow to create alias of commands
-    # (currently, used for getting some variable being detected as constants)
-    if 'mock' in config:
-        for key, value in config['mock'].items():
-            if hasattr(scribus, value) and not hasattr(scribus, key):
-                setattr(scribus, key, getattr(scribus, value))
-
     # read all the available commands
     scribus_doc = get_inspection(scribus)
 
@@ -205,6 +199,9 @@ def main():
     api_doc = DocApi(scribus_doc)
 
     for section_id, section in config['sources'].items():
+        if section_id == 'document':
+            print('>>>>', section_id)
+            print('>>>>', api_doc.scribus_doc.others)
         if 'functions' in section:
             if 'list' in section['functions']:
                 for command in section['functions']['list']:
@@ -217,9 +214,9 @@ def main():
             for constants in section['constants']:
                 if 'list' in constants:
                     api_doc.add_constants(section_id, constants['list'], constants['doc'])
-                elif 'regex' in constants:
+                if 'regex' in constants:
                     api_doc.add_constants_by_regex(section_id, constants['regex'], constants['doc'])
-    # for functions we need a second pass for regexes
+    # for functions we need a second pass for regexes (and avoid that regexes match functions that are also in lists)
     for section_id, section in config['sources'].items():
         if 'functions' in section:
             if 'regex' in section['functions']:
@@ -298,6 +295,23 @@ def main():
         logging.warning('Unprocessed class\n%s', f)
     for f, _ in api_doc.scribus_doc.others.items():
         logging.warning('Other unprocessed\n%s', f)
+
+def run_scribus():
+    """Start Scribus with this same script as the script to run"""
+    # if len(sys.argv) < 2:
+    #     print(f'Usage: python3 {sys.argv[0]} filename')
+    #     return
+
+    call_args = ['scribus', '-g', '-py', sys.argv[0]]
+    # call_args += ['--', sys.argv[1]]
+    subprocess.call(call_args)
+
+def main():
+    try:
+        import scribus
+        run_script()
+    except ImportError:
+        run_scribus()
 
 if __name__ == '__main__':
     main()

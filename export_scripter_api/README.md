@@ -50,17 +50,18 @@ The behavior of the script is configured with the file `export-api.json` next to
 
 ## Todo
 
-- improve the `scribus.__doc__` text
-- add the default values to the class members (most of all PDFExport)
-- optionally import markdown files for single commands (by checking if a file by the same name as the command exists)
-- allow commenting on single commands (inline comments or as link to github / gilab)
-- some function might be useful in multiple places. as an example, "getCustomLineStyle" and "setCustomLineStyle" are captured by "other styles" but might also need to be referenced in "Lines"
-- evaluate <https://github.com/egoist/docute> to create a vue.js site with on the fly reading of md files.
-  - it should have some search functionalities (<https://docute.org/plugin-api#apienablesearchoptions>)
-- improve the signature of the functions in the code by using the typing and explicit default values
- - `setInfo(author: str, info: str, description:str) -> bool
- - `getAllObjects(page: int = None) -> list
- - (This new convention has been retained by the team and will be implemented step by step)
+- [ ] Merge the two script and make it self calling if Scribus is not running.
+- [ ] improve the `scribus.__doc__` text
+- [ ] add the default values to the class members (most of all PDFExport)
+- [ ] optionally import markdown files for single commands (by checking if a file by the same name as the command exists)
+- [ ] allow commenting on single commands (inline comments or as link to github / gilab)
+- [ ] some function might be useful in multiple places. as an example, "getCustomLineStyle" and "setCustomLineStyle" are captured by "other styles" but might also need to be referenced in "Lines"
+- [ ] evaluate <https://github.com/egoist/docute> to create a vue.js site with on the fly reading of md files.
+  - [ ] it should have some search functionalities (<https://docute.org/plugin-api#apienablesearchoptions>)
+- [ ] improve the signature of the functions in the code by using the typing and explicit default values
+ - [ ] `setInfo(author: str, info: str, description:str) -> bool
+ - [ ] `getAllObjects(page: int = None) -> list
+ - [ ] (This new convention has been retained by the team and will be implemented step by step)
 
 ## Notes
 
