@@ -1,9 +1,10 @@
-"""
-Replace double dashes (--) by en-dashes and triple dashes (---) by em-dashes.
-If there is no selection, all the frames in the document are
+"""Replace double dashes (--) by en-dashes and triple dashes (---) by em-dashes.
+
+If there is no selection, all the frames in the document get processed.
+
+Inspired by a similar script by Gregory Pittman
 
 © mit, ale rimoldi, 2023
-Inspired by a similar script by Gregory Pittman
 """
 
 try:
@@ -37,6 +38,7 @@ def main():
         return
 
     if not scribus.haveDoc():
+        scribus.messageBox('Export Error', 'You need an open document.', icon=scribus.ICON_CRITICAL)
         return
 
     if scribus.selectionCount() > 0:
