@@ -73,6 +73,7 @@ def main():
 
     master_pages = get_master_pages_with_running_titles()
     if len(master_pages) == 0:
+        scribus.setRedraw(True)
         scribus.messageBox(
             'Error',
             f'No master page found, with a text item starting with {HEADING_ITEM_PREFIX}',
