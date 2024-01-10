@@ -24,9 +24,6 @@ def get_master_pages_with_running_titles():
             if item.startswith(HEADING_ITEM_PREFIX):
                 master_pages[master_page] = item
                 break
-        else:
-            continue
-        break
     scribus.closeMasterPage()
     return master_pages
 
