@@ -7,6 +7,12 @@
 - Run this script.
 - The first h1 on the same page or the latest found before are used for the heading of the page (if there are multiple h1 on a page, only the first one is retained).
 - Only the pages with a master page containing a 'running_title_' frame get the titles.
+## Settings
+
+At the beginning of the script you can modify:
+
+- HEADING_STYLE: to match the heading style in your document
+- HEADING_ITEM_PREFIX: if you prefer to use a different name schema for the items in the header.
 
 ## Todo
 
