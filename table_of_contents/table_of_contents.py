@@ -36,6 +36,11 @@ def get_frame_headings_by_style():
             page_number = scribus.currentPageNumber()
 
         if p_style in heading_styles:
+            # remove frame (26) and column (27) breaks
+            p = ''.join([c for c in p if ord(c) not in [26, 27]])
+            # ignore empty lines (most of all if they only contain a frame break)
+            if p == '':
+                continue
             headings.append({
                 'title': p,
                 'page': page_number,
