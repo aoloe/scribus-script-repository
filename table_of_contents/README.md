@@ -48,3 +48,10 @@ Not only you can customize the name of the styles, but you can create multiple t
 
 - In _File > Document Setup > Document Item Attributes_ create the attributes `heading_styles` and / or `toc_styles`, using the type string.
 - Select the frame where you want the table of contents and use the context menu to add the `heading_styles` and / or `toc_styles` attribute, setting the value to a comma separated list with the name of the styles.
+
+## Options
+
+- `toc_new_lines` = None|strip|truncate`
+  - `None` (default): the TOC keeps the newline in the title.
+  - `'strip'`: the newlines are replaced by spaces.
+  - `'truncate'`: remove the part of the heading after the first newline.

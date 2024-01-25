@@ -12,9 +12,11 @@ except ImportError:
 
 heading_styles = ['h1', 'h2', 'h3']
 toc_styles = ['toc1', 'toc2', 'toc3']
+toc_new_lines = None # strip | truncate
 # you can use the item attributes to set the heading and toc styles
 heading_attribute = 'heading_styles'
 toc_attribute = 'toc_styles'
+new_lines_attribute = 'toc_new_lines'
 
 # go through all paragraphs in the currently selected frame,
 # and if the style is h1 add the paragraph to the list of headings
@@ -26,8 +28,8 @@ def get_frame_headings_by_style():
     for p in paragraphs:
         scribus.selectFrameText(start, len(p))
         p_style = scribus.getParagraphStyle()
+        start += len(p) + 1
         if p_style == None:
-            start += len(p) + 1
             continue
         if hasattr(scribus, 'currentPageNumberForSection'):
             # introduced in 1.5.9svn on 2023-01-25
@@ -41,17 +43,23 @@ def get_frame_headings_by_style():
             # ignore empty lines (most of all if they only contain a frame break)
             if p == '':
                 continue
+
+            if toc_new_lines is not None:
+                parts = p.split(chr(8232))
+                if toc_new_lines == 'strip':
+                    p = ' '.join(parts)
+                elif toc_new_lines == 'truncate':
+                    p = parts[0]
             headings.append({
                 'title': p,
                 'page': page_number,
                 'level': heading_styles.index(p_style),
             })
-        start += len(p) + 1
 
     return headings
 
 def main():
-    global heading_styles, toc_styles
+    global heading_styles, toc_styles, toc_new_lines
     if not scribus.haveDoc():
         return
 
@@ -69,6 +77,8 @@ def main():
             heading_styles = [style.strip() for style in attribute['Value'].split(',')]
         elif attribute['Name'] == toc_attribute:
             toc_styles = [style.strip() for style in attribute['Value'].split(',')]
+        elif attribute['Name'] == new_lines_attribute:
+            toc_new_lines = attribute['Value'].strip()
     # ensure that the styles exist
     for style in set(heading_styles + toc_styles).difference(scribus.getParagraphStyles()):
         scribus.createParagraphStyle(style)
