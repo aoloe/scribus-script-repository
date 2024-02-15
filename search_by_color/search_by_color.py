@@ -82,7 +82,6 @@ class ButtonsRow(tk.Frame):
         tk.Frame.__init__(self, parent)
         for i, button in enumerate(buttons):
             button_tk = tk.Button(self, text=button.label, command=button.action)
-            # button_tk.pack()
             button_tk.grid(column = i, row=0, sticky=tk.W, padx=5, pady=5)
 
 def get_all_colors():
@@ -91,7 +90,6 @@ def get_all_colors():
     except NameError:
         # for testing outside of scribus
         return ['Red', 'Yellow', 'Blue', 'Pink', 'Black', 'White']
-    # return self.get_filtered_fonts('', {c.lower(): c for c in colors})
 
 def search_color(color, scope):
     if color is None:
@@ -109,15 +107,18 @@ def search_color(color, scope):
         for item in scribus.getPageItems():
             items = [item[0]]
             if item[1] == 12: # it's a group
-                # items = [inner[0] for inner in scribus.getGroupItems(item[0], recursive=True)]
-                pass
-            print('>>>', items)
+                items = [inner[0] for inner in scribus.getGroupItems(item[0], recursive=True)]
+            # print('>>>', items)
 
             for item_name in items:
-                if scribus.getFillColor(item_name) == color or scribus.getLineColor(item_name) == color:
-                    scribus.deselectAll()
-                    scribus.selectObject(item[0])
-                    return
+                try:
+                    # only starting from february 2024, scribus can query colors inside of groups
+                    if scribus.getFillColor(item_name) == color or scribus.getLineColor(item_name) == color:
+                        scribus.deselectAll()
+                        scribus.selectObject(item_name)
+                        return
+                except:
+                    pass
 
     scribus.gotoPage(current_page)
 

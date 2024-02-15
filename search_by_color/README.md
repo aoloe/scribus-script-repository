@@ -8,8 +8,4 @@ In this case, the user can also choose to search in the current page only or in 
 
 If Tkinter is not installed, the user will be prompted for the color name and the search will be performed in the full document.
 
-Currently, the script is ready to support searching the color inside of groups, but Scribus does not support querying the color of items that are inside of a group.
-
-## Todo
-
-- [ ] At the time of writing, `getFillColor()` and `getLineColor()` (and probably `GetUniqueItem()` do not support getting the color of items inside of groups.
+Currently, the script is ready to support searching the color inside of groups, but Scribus does not support querying the color of items that are inside of a group yet (a patch has been submitted to make it work).
