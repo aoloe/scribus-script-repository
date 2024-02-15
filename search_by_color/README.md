@@ -1,0 +1,15 @@
+# Serch Items by Color
+
+Find the first shape or frame with a specific color name as fill or stroke.
+
+If TKinter is installed, it will show the list of all colors with a filter, and let the user pick one of the colors.
+
+In this case, the user can also choose to search in the current page only or in the whole document.
+
+If Tkinter is not installed, the user will be prompted for the color name and the search will be performed in the full document.
+
+Currently, the script is ready to support searching the color inside of groups, but Scribus does not support querying the color of items that are inside of a group.
+
+## Todo
+
+- [ ] At the time of writing, `getFillColor()` and `getLineColor()` (and probably `GetUniqueItem()` do not support getting the color of items inside of groups.
