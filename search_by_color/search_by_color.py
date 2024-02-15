@@ -106,8 +106,9 @@ def search_color(color, scope):
         scribus.gotoPage(page)
         for item in scribus.getPageItems():
             items = [item[0]]
-            if item[1] == 12: # it's a group
-                items = [inner[0] for inner in scribus.getGroupItems(item[0], recursive=True)]
+            if hasattr(scribus, 'getGroupItems'):
+                if item[1] == 12: # it's a group
+                    items = [inner[0] for inner in scribus.getGroupItems(item[0], recursive=True)]
             # print('>>>', items)
 
             for item_name in items:
