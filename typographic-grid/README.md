@@ -77,6 +77,9 @@ Other grid calculators
 Rules and explanations
 - http://www.guylabbe.ca/blog/design-grilles-mise-en-page.html
 
+Have a look at:
+- <https://github.com/RaffertyR/typographic-grid>
+
 # Calculate a layout grid with the golden ratio
 
 - http://css.4design.tl/grille-typographique-nombre-d-or/  (french) :
