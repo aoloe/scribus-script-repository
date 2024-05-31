@@ -2,6 +2,9 @@
 
 Generate the table of contents with optional chapter numbering in the current frame by looking at the styles used in the document.
 
+![screenshot](toc-01.png)
+
+
 ## Example Usage
 
 - 1. Select the text frame you have inserted for the table of contens to show
