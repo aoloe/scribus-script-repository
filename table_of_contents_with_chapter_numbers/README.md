@@ -1,6 +1,6 @@
-# Table of contents
+# Table of contents with optional chapter numbering
 
-Generate the table of contents with optinal chapter numbering in the current frame by looking at the styles used in the document.
+Generate the table of contents with optional chapter numbering in the current frame by looking at the styles used in the document.
 
 ## Example Usage
 
