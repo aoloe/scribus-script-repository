@@ -1,6 +1,6 @@
-# Table of contents with optional chapter numbering
+# Table of contents with optional chapter numbering for Scribus
 
-Generate the table of contents with optional chapter numbering in the current frame by looking at the styles used in the document.
+Generate the table of contents (TOC) with optional chapter numbering for Scribus in the current frame by looking at the styles used in the document.
 
 ![screenshot](toc-01.png)
 
