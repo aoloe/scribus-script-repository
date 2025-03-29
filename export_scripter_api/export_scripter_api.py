@@ -137,6 +137,12 @@ class DocApi:
             self.add_section(section_id)
         self.sections[section_id]['constants'].append(constants_set)
 
+    def add_enums_from_file(self, section_id, filename):
+        pass
+
+    def add_enums(self, section_id, attr):
+        pass
+
     def add_class(self, section_id, attr):
         """ Inspect a class and add it to the list of the section's classes """
         if not section_id in self.sections:
@@ -213,6 +219,10 @@ def run_script():
                     api_doc.add_constants(section_id, constants['list'], constants['doc'])
                 if 'regex' in constants:
                     api_doc.add_constants_by_regex(section_id, constants['regex'], constants['doc'])
+        if 'enums' in section: # static content
+            for enums in section['enums']:
+                if 'files' in enums:
+                    api_doc.add_enum_from_file(section_id, enums)
     # for functions we need a second pass for regexes (and avoid that regexes match functions that are also in lists)
     for section_id, section in config['sources'].items():
         if 'functions' in section:

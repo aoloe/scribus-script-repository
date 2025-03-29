@@ -1,7 +1,7 @@
 {
     "files": {
         "in/README.md": "README.md",
-        "in/LICENSE": "LICENSE"
+        "in/LICENSE": "LICENSE",
     },
     "output":{
         "scribus": "Scribus",
@@ -287,6 +287,14 @@
                 }
             ]
         },
+        "table": {
+            "functions": {
+                "regex": [
+                    ".*Cell.*",
+                    ".*Table.*"
+                ]
+            }
+        },
         "text-frame": {
             "functions": {
                 "regex": [
@@ -336,14 +344,6 @@
                     ]
                 }
             ]
-        },
-        "table": {
-            "functions": {
-                "regex": [
-                    ".*Cell.*",
-                    ".*Table.*"
-                ]
-            }
         },
         "shape": {
             "functions": {

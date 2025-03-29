@@ -78,7 +78,7 @@ def main():
         return
 
     if scribus.selectionCount() > 0:
-        for i in range(scribus.selectionCount):
+        for i in range(scribus.selectionCount()):
             item = scribus.getSelectedObject(i)
             item_type = scribus.getObjectType()
             if item_type == 'ImageFrame':

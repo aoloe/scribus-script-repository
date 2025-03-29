@@ -53,7 +53,9 @@ The behavior of the script is configured with the file `export_scripter_api.json
 ## Todo
 
 - [x] Merge the two script and make it self calling if Scribus is not running.
-- [ ] improve the `scribus.__doc__` text
+- [ ] reformat everything to be like the constants, with a way to add several sections per type of values and a title.
+- [ ] allow markdown files to complete any function or for the whol "section"
+- [ ] impr ve the `scribus.__doc__` text
 - [ ] add the default values to the class members (most of all PDFExport)
 - [ ] optionally import markdown files for single commands (by checking if a file by the same name as the command exists)
 - [ ] allow commenting on single commands (inline comments or as link to github / gilab)
@@ -64,6 +66,8 @@ The behavior of the script is configured with the file `export_scripter_api.json
  - [ ] `setInfo(author: str, info: str, description:str) -> bool
  - [ ] `getAllObjects(page: int = None) -> list
  - [ ] (This new convention has been retained by the team and will be implemented step by step)
+ - [ ] Finish adding enums
+ - [ ] Finish adding enums from files
 
 ## Notes
 

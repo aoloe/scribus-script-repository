@@ -5,10 +5,10 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 """
-This script moves all images in the current layer to a specific layer.
+Move all images in the current layer to a specific layer.
 The idea being that you can show/hide, print-export/not as desired.
 
-You must have a document open.
+You need an open document.
 """
  
 def main():
@@ -19,7 +19,7 @@ def main():
             return
     except ImportError:
         print('This script must be run from inside Scribus')
-        # return
+        return
 
     current_layer = scribus.getActiveLayer()
 
