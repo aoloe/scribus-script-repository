@@ -37,31 +37,45 @@ def drawHorizontalGuide(y, width):
     scribus.setLineWidth(0.6, line)
     scribus.setLineStyle(scribus.LINE_DASHDOT, line)
 
+def drawBaselineGrid(page_width, page_height):
+    try:
+        scribus.getColorAsRGB('Grey')
+    except scribus.NotFoundError:
+        scribus.defineColorRGB('Grey', 192, 192, 192)
+        
+    baseline, offset = scribus.getBaseLine()
+
+    # range only works with ints: we multiply by 100 to increase the precision
+    for y in range(int(offset * 100), int(page_height * 100), int(baseline * 100)):
+        line = scribus.createLine(0, y / 100 , page_width, y / 100)
+        scribus.setLineColor('Grey', line)
+        scribus.setLineWidth(0.6, line)
+
 def drawPlaceholders():
-    page = scribus.getPageSize()
+    page_width, page_height = scribus.getPageSize()
     margin = scribus.getPageMargins()
 
     # add the page margins
     rectangle = scribus.createRect(margin[1],
-        margin[0], (page[0] - margin[1] - margin[2]),
-        (page[1] - margin[0] - margin[3]))
+        margin[0], (page_width - margin[1] - margin[2]),
+        (page_height - margin[0] - margin[3]))
     scribus.setFillColor('none', rectangle)
     scribus.setLineColor('Blue', rectangle)
     scribus.setLineWidth(0.4, rectangle)
 
     # add horizontal and vertical guides
     for item in scribus.getHGuides():
-        drawHorizontalGuide(item, page[0])
+        drawHorizontalGuide(item, page_width)
 
     for item in scribus.getVGuides():
-        drawVerticalGuide(item, page[1])
+        drawVerticalGuide(item, page_height)
 
     # add column and row guides
     for item in scribus.getRowGuides()['guides']:
-        drawHorizontalGuide(item, page[0])
+        drawHorizontalGuide(item, page_width)
 
     for item in scribus.getColumnGuides()['guides']:
-        drawVerticalGuide(item, page[1])
+        drawVerticalGuide(item, page_height)
 
     # add a "crossed frame" for missing images
     for item in scribus.getAllObjects():
@@ -69,6 +83,9 @@ def drawPlaceholders():
             image = scribus.getImageFile(item)
             if image == '':
                 drawImagePlaceholder(item)
+
+    # TODO: disabled by default until we can check if the baseline is visible
+    # drawBaselineGrid(page_width, page_height)
 
 def main():
     try:
