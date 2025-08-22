@@ -9,8 +9,9 @@ Based on work started by  Gregory Pittman (2006-03-04) and improved by Petr Vane
 
 try:
     import scribus # pylint: disable=import-error
-except ImportError:
-    pass
+except ImportError as ex:
+    print('\nThis script must be run from inside Scribus\n')
+    raise ex
 
 def export_text(filename):
     """Store in the text file the content of the text frame and the paths to the images."""
@@ -30,12 +31,6 @@ def export_text(filename):
     scribus.gotoPage(current_page)
 
 def main():
-    try:
-        scribus
-    except NameError:
-        print('This script must be run from inside Scribus')
-        return
-
     if not scribus.haveDoc():
         scribus.messageBox('Export Error', 'You need an open document.', icon=scribus.ICON_CRITICAL)
         return
