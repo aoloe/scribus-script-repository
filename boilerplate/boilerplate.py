@@ -1,15 +1,13 @@
-# encoding: utf-8
-#
-# (c) MIT your name
-#
-# Boilerplate for Scribus scripts
-#
-# For details see the README file.
+""" Boilerplate for Scribus scripts
+
+For details see the README file.
+
+(c) MIT your name"""
 
 try:
     import scribus
 except ImportError as ex:
-    print('This script must be run from inside Scribus')
+    print('\nThis script must be run from inside Scribus\n')
     raise ex
 
 def main():
