@@ -2,7 +2,7 @@
 
 For details see the README file.
 
-(c) MIT your name"""
+(c) MIT ale rimoldi"""
 
 try:
     import scribus
