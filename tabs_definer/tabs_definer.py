@@ -36,8 +36,9 @@ def main():
             tabs = tabs_definition.split(':')
             
             position = int(tabs[0]) if tabs[0].isdigit() else float(tabs[0])
-            # the tabs position is always in pt
-            position = position * 2.835
+            if scribus.SCRIBUS_VERSION_INFO[:3] < (1, 7, 1):
+                # Before 1.7.1, the tabs position was always in pt
+                position = position * 2.835
             align = 0 if len(tabs) == 1 else tabs_aligment[tabs[1]]
             style_tabs.append((position, align))
 
