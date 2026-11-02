@@ -1,0 +1,9 @@
+target:
+  file: output.pdf
+  format: a4
+  orientation: landscape
+source:
+  - file: a4-landscape.pdf
+  - file: a5-4-pages.pdf
+    layout: 2-n-up
+  - file: a4-landscape.pdf
