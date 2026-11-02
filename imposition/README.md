@@ -12,12 +12,3 @@ Only very simple imposition plans are supported:
 Since we're using pdfjam anyway, we can try to do _all_ the work in pdfjam:
 
 `pdfjam --nup 2x1 --booklet true --frame false --landscape --a4paper --preamble '\usepackage{everyshi}\makeatletter\EveryShipout{\ifodd\c@page\pdfpageattr{/Rotate 180}\fi}\makeatother' --outfile test.pdf a5-8pages.pdf`
-
-## `imposition-pdf.py`
-
-A new prototype that does not use `pdfjam` from LaTeX, but the pypdf pure Python library.
-
-Currently, it only runs from outside Scribus, and it only merges PDFs, but it's planned to add the feature from `sla-to-pdf.py` as soon as I need them again.
-
-- `pip install -r requirements.txt`
-- `python3 imposition-pdf.py samples/2-n-up-a5-to-a4/imposition.yml`
