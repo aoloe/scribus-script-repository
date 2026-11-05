@@ -10,4 +10,4 @@ It runs from outside Scribus.
 ## Install and run
 
 - `pip install -r requirements.txt`
-- `python3 imposition-pdf.py samples/2-n-up-a5-to-a4/imposition.yml`
+- `python3 project-imposition.py samples/2-n-up-a5-to-a4/imposition.yml`
