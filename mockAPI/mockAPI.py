@@ -1,3 +1,12 @@
+""" WIP Mock for the Scribus Scripter API
+
+Load this from your script can allow you to test it without starting Scribus
+(and without using a real Scribus document).
+
+For details see the README file.
+
+(c) 2026 MIT ale rimoldi"""
+
 class Scribus:
     def __init__(self):
         self.mock_instance = True
