@@ -11,3 +11,12 @@ It runs from outside Scribus.
 
 - `pip install -r requirements.txt`
 - `python3 project-imposition.py samples/2-n-up-a5-to-a4/imposition.yml`
+
+
+Running on Windows:
+
+```
+$ cd <path-to-the-scripts>/scribus-script-repository/project
+$ source venv/Scripts/activate
+$ py project-imposition.py <path-to-your-document>/imposition.yml
+```
