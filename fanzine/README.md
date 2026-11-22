@@ -10,7 +10,7 @@ The A7 pages are imposed in the following way:
  ↻ | ↻ | ↻ | ↻ |
 --- --- --- ---
  8 | 1 | 2 | 3 |
- ↻ | ↻ | ↻ | ↻ |
+   |   |   |   |
 --- --- --- ---
 ```
 
