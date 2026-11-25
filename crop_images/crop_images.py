@@ -1,112 +1,205 @@
-""" Crop the images in the selection
+""" Crop the images in the selection and scape them to a target resolution (300 dpi)
 
-TODO:
-- take the maximum resolution from the preflight verifier maximum resolution
-  (add a function to read the preflight verifier settings and one for the results)
-
-© mit, ale rimoldi, 2023
+© mit, ale rimoldi, 2026
 """
+
+from pathlib import Path
+import importlib.util
+import site
+
+import math
 
 try:
     import scribus # pylint: disable=import-error
 except ImportError:
     pass
 
-try:
-    # if PIL / Pillow is installed in non standard location (and not recognized):
-    #sys.path.append('C:\\Users\\Python37\\Lib\\site-packages')  # Windows
-    #sys.path.append('/usr/lib/python3/dist-packages')   # Linux
-    from pillow import Image # pylint: disable=import-error
-except ImportError:
-    pass
+def show_error(message):
+    scribus.messageBox('Scribus - Script Error', message, scribus.ICON_WARNING, scribus.BUTTON_OK)
 
-import logging
+def load_venv(packages):
+    """load_venv(packages) -> bool
 
-# TODO: read it from a json file. if it does not exists, create it and fill it with the defaults: sla-filename-crop.json
-IMAGE_RESOLUTION = 300 # TODO: we should read it from the maximum in the preflight verifier
+       Load the virtual environment in venv with the packages
 
-def crop_image(item):
+       packages -- A dict, the key being the name of the package and the value
+                   a folder in site-packages to test if the package is indeed
+                   installed.
+                   It can be a list if the package name is identical to
+                   the folder name.
+    """
+    ACTIVATE_PATH = Path(__file__).resolve().parent
+    venv_path = ACTIVATE_PATH / 'venv'
+    if not venv_path.is_dir():
+        show_error(f'You need to create a virtual environment called venv in the script folder:\n\n{venv_path}.\n\nSee the README.md for more details.')
+        return False
+
+    # Find site-packages on Windows or Linux/Mac
+    site_packages = None
+
+    for pattern in ('Lib/site-packages', 'lib/python*/site-packages'):
+        matches = list(venv_path.glob(pattern))
+        if matches:
+            site_packages = matches[0]
+            break
+
+    if site_packages is None:
+        show_error("Could not find the site-packages in the virtual environment.")
+        return False
+
+    site.addsitedir(site_packages)
+
+    if type(packages) is list:
+        packages = dict(zip(packages, packages))
+    for package, folder in packages.items():
+        if not (site_packages / folder).is_dir():
+            show_error(f'You need to pip install {package} in your virtual environment\n\n{ACTIVATE_PATH}.\n\n See the README.md for more details.')
+            return False
+
+    return True
+
+def crop_image(item, Image, ImageOps):
     image_filename = scribus.getImageFile(item)
     if image_filename == "":
+        show_error(f'{item} does has any image loaded.')
         return
 
     try:
         image = Image.open(image_filename)
     except:
-        scribus.messageBox('Warning:', f'Failed to open {image_filename} for {item}',
-            scribus.ICON_WARNING)
+        show_error(f'Failed to open {image_filename} for {item}')
         return
 
-    document_unit = scribus.getUnit()
+    # Respect the image's rotation in the EXIF fields, as does Scribus
+    image = ImageOps.exif_transpose(image)
 
+    document_unit = scribus.getUnit()
     scribus.setUnit(scribus.UNIT_INCHES)
+
     frame_width_in, frame_height_in = scribus.getSize(item)
-    # TODO: what is it doing here?
-    # TODO: do not scale if resolution is smaller than the target
-    target_image_width = int(frame_width_in * IMAGE_RESOLUTION)
-    target_image_height = int(frame_height_in * IMAGE_RESOLUTION)
 
     scribus.setUnit(scribus.UNIT_POINTS)
 
     frame_width, frame_height = scribus.getSize(item)
-    image_x_offset = int(scribus.getProperty(item, 'imageXOffset'))
-    image_y_offset = int(scribus.getProperty(item, 'imageYOffset'))
-    image_x_scale = int(scribus.getProperty(item,'imageXScale'))
-    image_y_scale = int(scribus.getProperty(item,'imageYScale'))
+
+    image_x_offset = scribus.getProperty(item, 'imageXOffset')
+    image_y_offset = scribus.getProperty(item, 'imageYOffset')
+    image_x_scale = scribus.getProperty(item,'imageXScale')
+    image_y_scale = scribus.getProperty(item,'imageYScale')
     image_width, image_height = image.size
 
-    crop_box_left = - image_x_offset
-    crop_box_top = - image_y_offset
+    crop_box_left = 0 if image_x_offset == 0 else - image_x_offset
+    crop_box_top = 0 if image_y_offset == 0 else - image_y_offset
     crop_box_right = crop_box_left + frame_width // image_x_scale
     crop_box_bottom = crop_box_top + frame_height // image_y_scale
 
     # do not crop if the image does not fill the frame
-    if image_x_offset > 0 or image_y_offset > 0 or \
-            crop_box_right > image_width or crop_box_bottom > image_height:
-        scribus.messageBox('Warning:', f'The image does not fill the frame {item}.',
-            scribus.ICON_WARNING)
+    if crop_box_left < 0 or crop_box_top < 0 or \
+            crop_box_right > image_width + crop_box_left or crop_box_bottom > image_height + crop_box_top:
+        show_error(f'The image does not fill the frame {item}.')
+        scribus.setUnit(document_unit)
         return
 
-    # TODO: if the filename for the cropped image exists, add an index
+    # show_error(f'{image_x_scale} x {image_y_scale}')
+    image_x_dpi = (720 / image_x_scale) / 10
+    image_y_dpi = (720 / image_y_scale) / 10
+
+    if not math.isclose(image_x_dpi, image_y_dpi):
+        show_error(f'The image\'s horizontal and vertical scaling are not the same.')
+        scribus.setUnit(document_unit)
+        return
+
+    image_dpi = image_x_dpi
+
+
+    # Only scale if the current DPI are 15% over the target
+    scale_ratio = 1
+    if image_dpi > IMAGE_TARGET_DPI * 115 / 100:
+        scale_ratio = IMAGE_TARGET_DPI / image_dpi
+        image = image.resize((int(image_width * scale_ratio), int(image_height * scale_ratio)), Image.LANCZOS)
+        image_width *= scale_ratio
+        image_height *= scale_ratio
+        image_dpi = IMAGE_TARGET_DPI
+
+    cropped = False
+    # Crop it, if it overflows more than 5% in any direction
+    if max(crop_box_left, crop_box_right) > frame_width * 0.05 or \
+            max(crop_box_top, crop_box_bottom) > frame_height * 0.05:
+        image = image.crop((
+            crop_box_left * scale_ratio, \
+            crop_box_top * scale_ratio, \
+            crop_box_right * scale_ratio, \
+            crop_box_bottom * scale_ratio))
+        cropped = True
+
+    # No change to save
+    if scale_ratio == 1 and not cropped:
+        scribus.setUnit(document_unit)
+        return 
+
+    # Save the action in the attributes and allow the user to restore the original state
+    scribus.setObjectAttributes([
+        {'Name': 'cropped source', 'Type': 'string',
+            'Value': image_filename, 'Parameter': '', 'Relationship': '',
+            'RelationshipTo': '', 'AutoAddTo': ''},
+        {'Name': 'cropped', 'Type': 'string',
+            'Value': f'{scale_ratio}, {crop_box_left}, {crop_box_right}', 'Parameter': '', 'Relationship': '',
+            'RelationshipTo': '', 'AutoAddTo': ''}
+        ], item)
+
+    # Save the scaled and cropped file and load it in the frame
+    target_path = Path(scribus.getDocName()).parent / IMAGES_FOLDER
+    if not target_path.is_dir():
+        target_path.mkdir()
+
+    target_file = target_path / Path(image_filename).name
+    image.save(target_file)
+    scribus.loadImage(str(target_file), item)
+
+    # Adjust the crop box
+    if not cropped:
+        if scale_ratio != 1:
+            scribus.setProperty(item, 'imageXOffset', crop_box_left * scale_ratio)
+            scribus.setProperty(item, 'imageYOffset', crop_box_top * scale_ratio)
+    else:
+        scribus.setScaleImageToFrame(True, True, item)
+
+    scribus.setUnit(document_unit)
+
+# TODO: use document wide attributes for the settings
+IMAGES_FOLDER = 'images-edited'
+IMAGE_TARGET_DPI = 300
 
 def main():
-    try:
-        scribus
-    except NameError:
-        print('This script must be run from inside Scribus.')
-        return
-
-    try:
-        image
-    except NameError:
-        print('Could not find the Pillow / PIL Python package.')
-        return
-
     if not scribus.haveDoc():
-        scribus.messageBox('Export Error', 'You need an open document.', icon=scribus.ICON_CRITICAL)
+        show_error("No document open.")
         return
 
-    # TODO: use logging instead of messageBox
-    # logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
-    # logging.debug('This message should go to the log file')
-    # logging.warning('And this, too')
-    # logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
-    # logging.warning('%s before you %s', 'Look', 'leap!') # f-strings are not necessary
-    # if 40 in logger._cache and logger._cache[40]... to check if something has been logged
-    # log to sla-filename-crop.log
+    if scribus.getDocName() == '':
+        show_error("You need to first save the document.")
+        return
 
+    if importlib.util.find_spec('pillow') is None:
+        # Load pillow and check if PIL exists
+        if not load_venv({'pillow': 'PIL'}):
+            return
+    try:
+        from PIL import Image, ImageOps
+    except ImportError:
+        show_error('Could not import pillow')
+        return
+
+    # TODO: maybe add a progress dialog
+    imagesCount = 0
     for i in range(scribus.selectionCount()):
         item = scribus.getSelectedObject(i)
         item_type = scribus.getObjectType(item)
         if item_type == 'ImageFrame':
-            crop_image(item)
-        elif item_type == 'Group':
-            if hasattr(scribus, 'getGroupItems'):
-                for item in scribus.getGroupItems(item,
-                        recursive=True, type=scribus.ITEMTYPE_IMAGEFRAME):
-                    crop_image(item['name'])
-            else:
-                scribus.messageBox('Warning', f'The group {item} will be skipped.', scribus.ICON_WARNING)
+            crop_image(item, Image, ImageOps)
+            imagesCount += 1
+
+    if imagesCount == 0: 
+        show_error("No image selected.")
 
 if __name__ == '__main__':
     main()
