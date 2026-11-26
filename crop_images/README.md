@@ -9,7 +9,8 @@ You can apply the script to multiple image frames at a time.
 A few Warnings:
 
 - The script only works correctly for images that are used only once in the document or if all usages have the same crop and frame size.
-- Images with the same name in the target
+- Images with the same name in the target will be overwritten.
+- The target resolution is 300 DPI. You need to modify the script to have a different one.
 
 This script main usage is with a collection of images:
 
