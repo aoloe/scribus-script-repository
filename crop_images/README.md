@@ -20,6 +20,34 @@ This script main usage is with a collection of images:
 - The values `scale_ration, crop_box_left, crop_box_right` are stored as a comma separated string in the 'cropped' attribute.  
   (In the future, this should help creating an "uncrop_images" script)
 
+## Installing Pillow
+
+The script uses the Pillow (PIL) library. You need to install it in a virtual environment inside of the folder where this script is placed.
+
+On Linux or Mac you can do:
+
+```
+cd fanzine/
+python3 -m venv venv
+source venv/bin/activate
+pip install pillow
+```
+
+On Windows, you have to replace the `source` command by:
+
+```
+source venv/Scripts/activate
+```
+
+with Git Bash or with the Microsoft own shells:
+
+```
+venv\Scripts\activate
+```
+
+You only need to do it once, before starting the script for the first time in Scribus.
+
+
 ## TODO
 
 Some ideas for future developments
