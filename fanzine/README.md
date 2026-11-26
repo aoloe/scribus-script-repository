@@ -37,13 +37,11 @@ On Windows, you have to replace the `source` command by:
 source venv/Scripts/activate
 ```
 
-with Git Bash or 
+with Git Bash or with the Microsoft own shells.
 
 ```
-venv/Scripts/activate
+venv\Scripts\activate
 ```
-
-with the Microsoft own shells.
 
 You only need to do it once, before starting the script for the first time in Scribus.
 
