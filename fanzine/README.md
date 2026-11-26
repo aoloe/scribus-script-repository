@@ -37,7 +37,7 @@ On Windows, you have to replace the `source` command by:
 source venv/Scripts/activate
 ```
 
-with Git Bash or with the Microsoft own shells.
+with Git Bash or with the Microsoft own shells:
 
 ```
 venv\Scripts\activate
